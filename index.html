@@ -1,0 +1,2372 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="iPad-Gruppe">
+<style>
+  html{ -webkit-text-size-adjust:100% }
+  img{ max-width:100% }
+  [hidden]{ display:none !important }
+</style>
+<title>iPad-Gruppe Board</title>
+</head>
+<body>
+<style>
+/* Hausfarben: Tannengrün 2A473B · Grün 4DAF8E · Mint CCE4D8 · Graugrün 6C887C */
+:root{
+  --brand:#2A473B; --brand-mid:#4DAF8E; --brand-soft:#CCE4D8; --brand-grey:#6C887C;
+  --brand-on:#FFFFFF;
+
+  --ground:#F0F4F1; --surface:#FFFFFF; --surface-2:#F6FAF7; --sunken:#E5EDE8;
+  --ink:#16241D; --ink-2:#3B4F45; --muted:#5E7268; --line:#D9E4DD; --line-2:#BDCEC4;
+  --danger:#A32F22; --danger-soft:#F9E9E6;
+
+  --c-news:#2F6E86;  --c-news-soft:#E1EDF2;
+  --c-todo:#8A6A12;  --c-todo-soft:#F3EEDC;
+  --c-doing:#AE5A28; --c-doing-soft:#F7E9E0;
+  --c-done:#35735A;  --c-done-soft:#DFEDE5;
+  --c-hold:#6C887C;  --c-hold-soft:#E8EEEB;
+  --c-team:#2A473B;  --c-team-soft:#CCE4D8;
+
+  --m0:#2A473B; --m0s:#CCE4D8;
+  --m1:#2F6E86; --m1s:#DCEAF0;
+  --m2:#8A6A12; --m2s:#F3EEDC;
+  --m3:#AE5A28; --m3s:#F7E9E0;
+  --m4:#6C887C; --m4s:#E8EEEB;
+  --m5:#7A4E9C; --m5s:#EFE7F5;
+  --m6:#3E4C9A; --m6s:#E4E7F4;
+  --c-arch:#56616D;  --c-arch-soft:#E9ECEF;
+  /* Signalrot für wichtige Karten – in beiden Themen gleich knallig */
+  --imp:#E3141B; --imp-deep:#A50E13; --imp-on:#FFFFFF;
+
+  --shadow:0 1px 2px rgba(20,36,29,.08), 0 1px 1px rgba(20,36,29,.05);
+  --lift:0 14px 30px rgba(20,36,29,.22), 0 2px 6px rgba(20,36,29,.12);
+  /* Nur lokal installierte Schriften: die Seite lädt nichts von fremden Servern */
+  --sans:Calibri, Carlito, "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --brand:#7FCBAE; --brand-mid:#4DAF8E; --brand-soft:#17281F; --brand-grey:#9BB3A6;
+    --brand-on:#0D1611;
+    --ground:#0F1512; --surface:#18201B; --surface-2:#1E2823; --sunken:#131A16;
+    --ink:#E6EEE9; --ink-2:#BFCEC6; --muted:#8B9E94; --line:#25322B; --line-2:#37483F;
+    --danger:#F08C7F; --danger-soft:#32201D;
+    --c-news:#74AEC4;  --c-news-soft:#15252B;
+    --c-todo:#D2AE5B;  --c-todo-soft:#292315;
+    --c-doing:#DE9265; --c-doing-soft:#2E2119;
+    --c-done:#6FC298;  --c-done-soft:#15281E;
+    --c-hold:#9BB3A6;  --c-hold-soft:#1E2622;
+    --c-team:#7FCBAE;  --c-team-soft:#17281F;
+    --m0:#7FCBAE; --m0s:#17281F;
+    --m1:#7FB6CB; --m1s:#15252B;
+    --m2:#D2AE5B; --m2s:#292315;
+    --m3:#DE9265; --m3s:#2E2119;
+    --m4:#9BB3A6; --m4s:#1E2622;
+    --m5:#C3A5E0; --m5s:#271F30;
+    --m6:#9EA9E8; --m6s:#1C2034;
+    --c-arch:#A3ADB8;  --c-arch-soft:#1E2329;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --lift:0 16px 34px rgba(0,0,0,.6), 0 2px 8px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --brand:#7FCBAE; --brand-mid:#4DAF8E; --brand-soft:#17281F; --brand-grey:#9BB3A6;
+  --brand-on:#0D1611;
+  --ground:#0F1512; --surface:#18201B; --surface-2:#1E2823; --sunken:#131A16;
+  --ink:#E6EEE9; --ink-2:#BFCEC6; --muted:#8B9E94; --line:#25322B; --line-2:#37483F;
+  --danger:#F08C7F; --danger-soft:#32201D;
+  --c-news:#74AEC4;  --c-news-soft:#15252B;
+  --c-todo:#D2AE5B;  --c-todo-soft:#292315;
+  --c-doing:#DE9265; --c-doing-soft:#2E2119;
+  --c-done:#6FC298;  --c-done-soft:#15281E;
+  --c-hold:#9BB3A6;  --c-hold-soft:#1E2622;
+  --c-team:#7FCBAE;  --c-team-soft:#17281F;
+  --m0:#7FCBAE; --m0s:#17281F;
+  --m1:#7FB6CB; --m1s:#15252B;
+  --m2:#D2AE5B; --m2s:#292315;
+  --m3:#DE9265; --m3s:#2E2119;
+  --m4:#9BB3A6; --m4s:#1E2622;
+  --m5:#C3A5E0; --m5s:#271F30;
+  --m6:#9EA9E8; --m6s:#1C2034;
+  --c-arch:#A3ADB8;  --c-arch-soft:#1E2329;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+  --lift:0 16px 34px rgba(0,0,0,.6), 0 2px 8px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  height:100dvh; display:flex; flex-direction:column; overflow:hidden;
+}
+button{font:inherit; color:inherit}
+
+/* ---------- Kopfzeile im Tannengrün ---------- */
+.topbar{
+  flex:0 0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:6px 20px;
+  padding:13px clamp(12px,2vw,26px);
+  background:#2A473B; color:#FFFFFF;
+}
+h1{margin:0; font-size:clamp(17px,2.2vw,21px); font-weight:700; letter-spacing:.005em; text-wrap:balance}
+.subtitle{margin:1px 0 0; color:#CCE4D8; font-size:13px}
+.topbar-right{margin-left:auto; display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.hint{color:#CCE4D8; font-size:12.5px}
+.status{
+  display:inline-flex; align-items:center; gap:7px; font-size:12px;
+  color:#EAF4EE; border:1px solid rgba(204,228,216,.42); border-radius:999px;
+  padding:4px 11px 4px 9px; background:rgba(255,255,255,.08); white-space:nowrap;
+}
+.topbtn{
+  min-height:34px; padding:0 13px; border-radius:7px; cursor:pointer;
+  background:rgba(255,255,255,.10); color:#FFFFFF;
+  border:1px solid rgba(204,228,216,.45); font-size:13.5px;
+}
+.topbtn:hover{background:rgba(255,255,255,.2)}
+.topbtn:focus-visible{outline:2px solid #CCE4D8; outline-offset:2px}
+.status .dot{width:7px; height:7px; border-radius:50%; background:#8FA79A}
+.status.ok .dot{background:#7FE0B4}
+.status.local .dot{background:#E8C266}
+.status.warn .dot{background:#F0968A}
+
+/* ---------- Board ---------- */
+.board{
+  flex:1 1 auto; min-height:0;
+  display:flex; gap:14px; align-items:stretch;
+  padding:14px clamp(12px,2vw,26px) 18px;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x proximity; overscroll-behavior-x:contain;
+}
+body.dragging .board{scroll-snap-type:none}
+.col{
+  scroll-snap-align:start;
+  flex:1 1 300px; min-width:min(300px,80vw);
+  display:flex; flex-direction:column; min-height:0;
+  /* Spaltenfläche in der Spaltenfarbe – ältere Browser bekommen den fertigen Hellton */
+  background:var(--acc-soft);
+  background:color-mix(in srgb, var(--acc) 22%, var(--surface));
+  border:1px solid var(--line);
+  border-color:color-mix(in srgb, var(--acc) 45%, var(--surface));
+  border-top:3px solid var(--acc); border-radius:10px;
+}
+.col-head{flex:0 0 auto; display:flex; align-items:center; gap:9px; padding:11px 13px 9px}
+.col-title{font-size:15px; font-weight:700; color:var(--ink); flex:1 1 auto; min-width:0}
+.col-count{
+  font-size:12px; font-variant-numeric:tabular-nums; font-weight:700;
+  color:var(--surface); background:var(--acc); border-radius:999px;
+  padding:2px 9px; min-width:27px; text-align:center;
+}
+.col-body{
+  flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior-y:contain;
+  display:flex; flex-direction:column; gap:11px; padding:2px 11px 4px;
+}
+.col-foot{flex:0 0 auto; padding:10px 11px 12px}
+.add{
+  width:100%; min-height:44px; border:1px dashed var(--line-2); border-radius:8px;
+  background:transparent; color:var(--muted); cursor:pointer; font-size:14px;
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  transition:border-color .12s, color .12s, background .12s;
+}
+.add:hover{border-color:var(--acc); color:var(--acc); background:var(--surface)}
+.add .plus{font-size:18px; line-height:1; margin-top:-2px}
+.empty{
+  border:1px dashed var(--line-2); border-radius:8px; color:var(--ink-2);
+  border-color:color-mix(in srgb, var(--acc) 45%, var(--surface));
+  font-size:13.5px; padding:16px 12px; text-align:center;
+}
+
+/* ---------- Teamleiste ---------- */
+.teambar{
+  flex:0 0 auto; display:flex; align-items:center; gap:10px;
+  padding:8px max(clamp(12px,2vw,26px), env(safe-area-inset-right)) 8px max(clamp(12px,2vw,26px), env(safe-area-inset-left));
+  background:var(--surface); border-bottom:1px solid var(--line);
+}
+.teambar-label{flex:0 0 auto; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.team-list{flex:1 1 auto; min-width:0; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding:2px}
+.team-list::-webkit-scrollbar{display:none}
+.member{
+  flex:0 0 auto; display:flex; align-items:center; gap:8px; min-height:44px; padding:4px 10px 4px 4px;
+  background:var(--surface-2); border:1px solid var(--line); border-radius:999px;
+  cursor:grab; touch-action:pan-x; -webkit-touch-callout:none; user-select:none; -webkit-user-select:none;
+}
+.member:active{cursor:grabbing}
+button, .card, .member, .coltab{-webkit-tap-highlight-color:transparent}
+.member:focus-visible{outline:2px solid var(--mc); outline-offset:2px}
+.avatar{
+  flex:0 0 auto; width:34px; height:34px; border-radius:50%; overflow:hidden;
+  background:var(--mc); color:var(--surface);
+  display:flex; align-items:center; justify-content:center;
+}
+.avatar svg{width:22px; height:22px}
+.avatar img{width:100%; height:100%; object-fit:cover; display:block}
+.member-name{font-size:14px; font-weight:700; color:var(--ink); letter-spacing:.02em}
+.member-load{
+  min-width:20px; padding:1px 6px; border-radius:999px; text-align:center;
+  background:var(--mc-soft); color:var(--mc); font-size:11.5px; font-weight:700; font-variant-numeric:tabular-nums;
+}
+.team-edit{
+  flex:0 0 auto; min-height:40px; padding:0 12px; border-radius:8px; cursor:pointer;
+  border:1px solid var(--line-2); background:transparent; color:var(--ink-2); font-size:13.5px;
+}
+.team-edit:hover{border-color:var(--muted); color:var(--ink)}
+.team-edit:focus-visible{outline:2px solid var(--brand-mid); outline-offset:2px}
+
+/* ---------- Spaltenreiter (iPad hochkant, Smartphone) ---------- */
+.coltabs{
+  flex:0 0 auto; display:none; gap:6px; overflow-x:auto; scrollbar-width:none;
+  padding:9px max(12px, env(safe-area-inset-right)) 1px max(12px, env(safe-area-inset-left));
+}
+.coltabs::-webkit-scrollbar{display:none}
+.coltab{
+  flex:0 0 auto; display:inline-flex; align-items:center; gap:7px; min-height:40px; padding:0 12px 0 10px;
+  border-radius:999px; border:1px solid var(--line-2); background:var(--surface);
+  color:var(--ink-2); font-size:13.5px; cursor:pointer; white-space:nowrap;
+}
+.coltab .dot{width:9px; height:9px; border-radius:50%; background:var(--acc)}
+.coltab .n{font-weight:700; font-variant-numeric:tabular-nums; color:var(--ink)}
+.coltab .imp-n{background:var(--imp); color:#FFFFFF; border-radius:999px; padding:0 6px; font-size:11.5px; font-weight:700}
+.coltab[aria-current="true"]{background:var(--acc); border-color:var(--acc); color:var(--surface)}
+.coltab[aria-current="true"] .dot{background:var(--surface)}
+.coltab[aria-current="true"] .n{color:var(--surface)}
+.coltab.drop-target{outline:3px solid var(--acc); outline-offset:2px}
+.coltab:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+
+/* ---------- Spaltenkopf: wichtige Karten, Archiv ---------- */
+.col-imp{
+  flex:0 0 auto; padding:2px 8px; border-radius:999px;
+  background:var(--imp); color:#FFFFFF; font-size:12px; font-weight:700;
+}
+.col-arch-toggle{
+  flex:0 0 auto; min-height:34px; padding:0 9px; border-radius:7px; cursor:pointer;
+  border:1px solid transparent; background:transparent; color:var(--acc); font-size:12.5px;
+}
+.col-arch-toggle:hover{border-color:var(--acc)}
+.col[data-col="archive"] .card:not(.important){opacity:.82}
+
+/* ---------- Karten ---------- */
+.card{
+  position:relative; display:flex; align-items:stretch;
+  background:var(--surface); border:1px solid var(--line);
+  border-color:color-mix(in srgb, var(--acc) 30%, var(--surface));
+  border-radius:8px; box-shadow:var(--shadow);
+  min-height:62px; cursor:pointer; touch-action:manipulation;
+  transition:box-shadow .12s, border-color .12s;
+}
+.card:hover{
+  border-color:var(--acc);
+  border-color:color-mix(in srgb, var(--acc) 65%, var(--surface));
+}
+.card:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.grip{
+  flex:0 0 38px; border-radius:8px 0 0 8px;
+  border-right:1px solid var(--line);
+  border-right-color:color-mix(in srgb, var(--acc) 40%, var(--surface));
+  background:var(--acc-soft);
+  background:color-mix(in srgb, var(--acc) 42%, var(--surface));
+  display:flex; align-items:center; justify-content:center;
+  cursor:grab; touch-action:none;
+  -webkit-touch-callout:none; user-select:none; -webkit-user-select:none;
+}
+.grip:active{cursor:grabbing}
+.grip svg{display:block; color:var(--acc); opacity:1}
+.card-main{flex:1 1 auto; min-width:0; padding:10px 12px 10px 11px; display:flex; flex-direction:column; gap:5px; justify-content:center}
+.card-title{margin:0; font-size:15px; line-height:1.35; color:var(--ink); overflow-wrap:anywhere}
+.notes{display:flex; flex-direction:column; gap:7px; margin-top:3px}
+.notes-toggle{
+  display:flex; align-items:center; gap:7px; width:100%; min-height:36px; padding:0 2px;
+  background:none; border:0; border-top:1px solid var(--line);
+  border-top-color:color-mix(in srgb, var(--acc) 28%, var(--surface));
+  color:var(--ink-2); font-size:13px; text-align:left; cursor:pointer;
+}
+.notes-toggle:hover{color:var(--ink)}
+.notes-toggle:focus-visible{outline:2px solid var(--acc); outline-offset:2px; border-radius:4px}
+.chev{flex:0 0 auto; width:16px; height:16px; color:var(--acc); transition:transform .15s}
+.notes.open .chev{transform:rotate(90deg)}
+.notes-count{font-weight:700; color:var(--ink)}
+.notes-last{color:var(--muted); font-variant-numeric:tabular-nums; margin-left:auto; white-space:nowrap}
+.notes-body{display:none; flex-direction:column; gap:7px; padding-bottom:2px}
+.notes.open .notes-body{display:flex}
+.notes-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px}
+.note{
+  display:grid; grid-template-columns:1fr auto; column-gap:4px;
+  padding:6px 4px 7px 9px; border-radius:6px;
+  background:var(--surface-2); border:1px solid var(--line);
+  border-left:3px solid var(--acc);
+}
+.note-time{font-size:11.5px; color:var(--muted); font-variant-numeric:tabular-nums; align-self:center}
+.note-text{grid-column:1; font-size:13.5px; line-height:1.4; color:var(--ink); white-space:pre-wrap; overflow-wrap:anywhere}
+.note-del{
+  grid-column:2; grid-row:1 / span 2; align-self:start;
+  width:32px; height:32px; border:0; border-radius:6px; background:transparent;
+  color:var(--muted); opacity:.6; font-size:16px; line-height:1; cursor:pointer;
+}
+.note-del:hover{opacity:1; color:var(--danger); background:var(--danger-soft)}
+.note-add{display:flex; gap:6px}
+.note-input{
+  flex:1 1 auto; min-width:0; min-height:40px; padding:8px 10px;
+  font:inherit; font-size:14px; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--line-2); border-radius:7px;
+}
+.note-input:focus{outline:2px solid var(--acc); outline-offset:1px; border-color:transparent}
+.note-save{
+  flex:0 0 auto; min-height:40px; min-width:44px; padding:0 12px; border-radius:7px; cursor:pointer;
+  background:var(--acc); color:var(--surface); border:0; font-size:18px; font-weight:700; line-height:1;
+}
+.note-save:focus-visible, .note-del:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.card-meta{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:2px}
+.col-body > *{flex-shrink:0}
+.card-title, .note-text{overflow-wrap:break-word; -webkit-hyphens:auto; hyphens:auto}
+.card-meta .flag{margin:0 -6px 0 auto; width:34px; height:34px; align-self:center}
+.tag.has-av{padding-left:2px}
+.tag-av{width:18px; height:18px; border-radius:50%; object-fit:cover; margin-right:5px; display:block}
+.chip.imp-badge{background:#FFFFFF; color:var(--imp-deep); border-color:#FFFFFF; font-weight:700; letter-spacing:.06em}
+
+/* ---------- Markierung „wichtig“ ---------- */
+.flag{
+  flex:0 0 auto; align-self:flex-start; width:36px; height:36px; margin:6px 6px 0 -4px;
+  border:0; border-radius:8px; background:transparent; color:var(--muted); opacity:.7;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+}
+.flag svg{width:18px; height:18px}
+.flag:hover{opacity:1; color:var(--imp); background:var(--danger-soft)}
+.flag:focus-visible{outline:2px solid var(--imp); outline-offset:1px; opacity:1}
+.card.important{
+  background:var(--imp); border-color:var(--imp-deep); color:var(--imp-on);
+  box-shadow:0 0 0 2px var(--imp), 0 6px 18px rgba(227,20,27,.35);
+}
+.card.important:hover{border-color:#FFFFFF}
+.card.important:focus-visible{outline:3px solid var(--imp-deep)}
+.card.important .card-title{color:#FFFFFF; font-weight:700}
+.card.important .grip{background:var(--imp-deep); border-right-color:rgba(255,255,255,.28)}
+.card.important .grip svg{color:#FFFFFF}
+.card.important .chip{background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.5); color:#FFFFFF}
+.card.important .chip.imp-badge{background:#FFFFFF; color:var(--imp-deep)}
+.card.important .chip.due.overdue{background:#FFFFFF; color:var(--imp-deep)}
+.card.important .tag{box-shadow:0 0 0 2px #FFFFFF}
+.card.important .flag{background:#FFFFFF; color:var(--imp); opacity:1}
+.card.important .notes-toggle{color:#FFFFFF; border-top-color:rgba(255,255,255,.38)}
+.card.important .notes-count, .card.important .chev{color:#FFFFFF}
+.card.important .notes-last{color:rgba(255,255,255,.85)}
+.card.important .note{background:rgba(0,0,0,.16); border-color:rgba(255,255,255,.28); border-left-color:#FFFFFF}
+.card.important .note-text{color:#FFFFFF}
+.card.important .note-time{color:rgba(255,255,255,.82)}
+.card.important .note-del{color:#FFFFFF}
+.card.important .note-input{background:#FFFFFF; color:#16241D; border-color:transparent}
+.card.important .note-input::placeholder{color:#8A5A5A}
+.card.important .note-save{background:#FFFFFF; color:var(--imp-deep)}
+
+/* Schalter im Bearbeiten-Dialog */
+.imp-toggle{
+  display:inline-flex; align-items:center; gap:9px; min-height:44px; padding:0 16px 0 12px; align-self:flex-start;
+  border-radius:999px; border:1px solid var(--line-2); background:var(--surface-2); color:var(--ink-2);
+  font-size:14.5px; cursor:pointer;
+}
+.imp-toggle .imp-dot{width:16px; height:16px; border-radius:50%; border:2px solid var(--imp)}
+.imp-toggle[aria-pressed="true"]{background:var(--imp); border-color:var(--imp); color:#FFFFFF; font-weight:700}
+.imp-toggle[aria-pressed="true"] .imp-dot{background:#FFFFFF; border-color:#FFFFFF}
+.imp-toggle:focus-visible{outline:2px solid var(--imp); outline-offset:2px}
+
+/* Team-Dialog */
+.team-rows{list-style:none; margin:0 0 14px; padding:0; display:flex; flex-direction:column; gap:8px}
+.team-row{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  padding:6px 6px 6px 8px; border:1px solid var(--line); border-radius:9px; background:var(--surface-2);
+}
+.team-row .member-name{flex:1 1 auto}
+.mini-btn{
+  min-height:36px; padding:0 10px; border-radius:7px; cursor:pointer;
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2); font-size:13px;
+}
+.mini-btn:hover{border-color:var(--muted)}
+.mini-btn.danger{color:var(--danger); border-color:transparent; background:transparent}
+.mini-btn.danger:hover{background:var(--danger-soft)}
+.mini-btn:focus-visible{outline:2px solid var(--brand-mid); outline-offset:2px}
+.team-add{display:flex; gap:8px}
+.team-add input{
+  flex:1 1 auto; min-width:0; min-height:44px; padding:10px 11px; font:inherit; font-size:15px;
+  color:var(--ink); background:var(--surface-2); border:1px solid var(--line-2); border-radius:7px;
+  text-transform:uppercase;
+}
+.team-add input:focus{outline:2px solid var(--brand-mid); outline-offset:1px; border-color:transparent}
+.chip{
+  font-size:12px; border-radius:5px; padding:2px 7px; white-space:nowrap;
+  background:var(--surface-2); color:var(--ink-2);
+  border:1px solid var(--line);
+  border-color:color-mix(in srgb, var(--acc) 40%, var(--surface));
+}
+.chip.due{font-variant-numeric:tabular-nums}
+.chip.due.overdue{background:var(--danger-soft); border-color:transparent; color:var(--danger); font-weight:700}
+.chip.sample{background:transparent; border-style:dashed; color:var(--muted)}
+.tag{
+  display:inline-flex; align-items:center; height:22px; padding:0 8px;
+  border-radius:999px; background:var(--mc); color:var(--surface);
+  font-size:11.5px; font-weight:700; letter-spacing:.02em; white-space:nowrap;
+}
+
+/* ---------- Zieh-Zustände ---------- */
+.card.ghost{
+  position:fixed; left:0; top:0; z-index:60; margin:0;
+  pointer-events:none; box-shadow:var(--lift); transition:none; cursor:grabbing;
+}
+.member-ghost{
+  position:fixed; left:0; top:0; z-index:60; pointer-events:none;
+  display:flex; align-items:center; justify-content:center;
+  width:44px; height:44px; border-radius:50%;
+  background:var(--mc); color:var(--surface);
+  font-size:13px; font-weight:700; box-shadow:var(--lift);
+}
+.placeholder{
+  border:2px dashed var(--acc); background:transparent;
+  border-radius:8px; flex:0 0 auto;
+}
+body.dragging{cursor:grabbing; user-select:none; -webkit-user-select:none}
+body.dragging .card:not(.ghost){transition:none}
+.col.drop-target{border-color:var(--acc)}
+.card.assign-target{border-color:var(--mc); box-shadow:0 0 0 2px var(--mc-soft), var(--shadow)}
+.assign-badge{
+  position:absolute; top:-10px; right:8px; z-index:5;
+  font-size:12px; font-weight:700; padding:3px 9px; border-radius:999px;
+  background:var(--mc); color:var(--surface); box-shadow:var(--shadow); white-space:nowrap;
+}
+.assign-badge.remove{background:var(--danger); color:#FFFFFF}
+
+/* ---------- Dialog ---------- */
+.overlay{
+  position:fixed; inset:0; z-index:80; display:none;
+  background:rgba(13,22,17,.46); backdrop-filter:blur(2px);
+  align-items:flex-start; justify-content:center; padding:max(16px,4vh) 14px; overflow-y:auto;
+}
+.overlay.open{display:flex}
+.sheet{
+  width:min(520px,100%); background:var(--surface); color:var(--ink);
+  border:1px solid var(--line); border-top:4px solid var(--acc, var(--brand));
+  border-radius:12px; box-shadow:var(--lift);
+  padding:17px clamp(16px,3vw,22px) 16px; margin:auto 0;
+}
+.sheet h2{margin:0 0 2px; font-size:18px; font-weight:700}
+.sheet-sub{margin:0 0 16px; color:var(--muted); font-size:13.5px}
+.field{display:flex; flex-direction:column; gap:6px; margin-bottom:13px}
+.field label{font-size:13px; font-weight:700; color:var(--ink-2)}
+.field input, .field textarea, .field select{
+  font:inherit; font-size:15px; color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--line-2); border-radius:7px; padding:10px 11px; min-height:44px;
+  width:100%; -webkit-appearance:none; appearance:none;
+}
+.field textarea{min-height:78px; resize:vertical; line-height:1.45}
+.field input:focus, .field textarea:focus, .field select:focus{
+  outline:2px solid var(--brand-mid); outline-offset:1px; border-color:transparent;
+}
+.picker{display:flex; flex-wrap:wrap; gap:8px}
+.pick{
+  display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 14px 0 9px;
+  border-radius:999px; border:1px solid var(--line-2); background:var(--surface-2);
+  cursor:pointer; font-size:14.5px;
+}
+.pick .dotm{width:22px; height:22px; border-radius:50%; background:var(--mc); color:var(--surface);
+  display:flex; align-items:center; justify-content:center; font-size:9.5px; font-weight:700}
+.pick[aria-pressed="true"]{background:var(--mc-soft); border-color:var(--mc); color:var(--mc); font-weight:700}
+.picker-empty{color:var(--muted); font-size:13.5px}
+.code{
+  font-family:ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size:11px; line-height:1.35; height:104px; resize:vertical;
+  word-break:break-all; color:var(--ink-2);
+}
+.step{
+  border-top:1px solid var(--line); margin-top:18px; padding-top:15px;
+}
+.step:first-of-type{border-top:0; margin-top:0; padding-top:0}
+.step h3{margin:0 0 3px; font-size:15px; font-weight:700}
+.step p{margin:0 0 11px; font-size:13.5px; color:var(--muted); line-height:1.45}
+.inline-actions{display:flex; gap:9px; flex-wrap:wrap; margin-top:9px}
+.row2{display:flex; gap:12px; flex-wrap:wrap}
+.row2 .field{flex:1 1 150px}
+.actions{display:flex; align-items:center; gap:10px; margin-top:4px; flex-wrap:wrap}
+.btn{
+  min-height:44px; padding:0 17px; border-radius:8px; cursor:pointer;
+  border:1px solid var(--line-2); background:var(--surface-2); font-size:15px;
+  transition:background .12s, border-color .12s;
+}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--brand); color:var(--brand-on); border-color:var(--brand); font-weight:700}
+.btn.primary:hover{opacity:.9}
+.btn.danger{color:var(--danger); border-color:transparent; background:transparent; padding:0 10px}
+.btn.danger:hover{background:var(--danger-soft)}
+.actions .spacer{flex:1 1 auto}
+.btn:focus-visible, .pick:focus-visible, .member-remove:focus-visible{outline:2px solid var(--brand-mid); outline-offset:2px}
+
+/* ---------- Anmeldung ---------- */
+.login{
+  position:fixed; inset:0; z-index:90; display:flex; align-items:center; justify-content:center;
+  padding:28px 16px; background:var(--ground); overflow-y:auto;
+}
+.login::before{content:""; position:fixed; left:0; right:0; top:0; height:6px; background:#2A473B}
+.login-card{
+  width:min(400px,100%); background:var(--surface); color:var(--ink);
+  border:1px solid var(--line); border-top:4px solid var(--brand); border-radius:12px;
+  box-shadow:var(--lift); padding:22px clamp(18px,4vw,26px) 18px; margin:auto 0;
+}
+.login-eyebrow{margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--brand-grey)}
+.login-card h2{margin:0; font-size:22px; font-weight:700}
+.login-sub{margin:3px 0 18px; color:var(--muted); font-size:14px; line-height:1.45}
+.login-msg{margin:0 0 12px; padding:9px 11px; border-radius:7px; background:var(--danger-soft); color:var(--danger); font-size:13.5px; line-height:1.4}
+.login-msg.info{background:var(--c-done-soft); color:var(--c-done)}
+.login-btn{width:100%; margin-top:2px}
+.login-btn[disabled]{opacity:.6; cursor:progress}
+.login-links{display:flex; justify-content:center; margin-top:8px}
+.linkbtn{background:none; border:0; color:var(--brand); text-decoration:underline; text-underline-offset:2px; cursor:pointer; font-size:13.5px; min-height:40px; padding:0 8px}
+.linkbtn:focus-visible{outline:2px solid var(--brand-mid); outline-offset:2px; border-radius:4px}
+.login-foot{margin:10px 0 0; font-size:12.5px; color:var(--muted); text-align:center; line-height:1.4}
+.uid{
+  display:block; margin:6px 0 16px; padding:8px 10px; border-radius:6px;
+  font-family:ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size:12.5px;
+  background:var(--surface-2); border:1px solid var(--line); word-break:break-all;
+  user-select:all; -webkit-user-select:all;
+}
+.login-actions{display:flex; gap:10px; flex-wrap:wrap}
+.login-actions .btn{flex:1 1 140px}
+
+/* ---------- Ränder für iPad und iPhone (Notch, Home-Leiste) ---------- */
+.topbar{
+  padding-top:max(13px, env(safe-area-inset-top));
+  padding-left:max(clamp(12px,2vw,26px), env(safe-area-inset-left));
+  padding-right:max(clamp(12px,2vw,26px), env(safe-area-inset-right));
+}
+.board{
+  position:relative;
+  padding-bottom:max(18px, env(safe-area-inset-bottom));
+  padding-left:max(clamp(12px,2vw,26px), env(safe-area-inset-left));
+  padding-right:max(clamp(12px,2vw,26px), env(safe-area-inset-right));
+}
+
+/* iPad quer und Rechner: alle Spalten auf einen Blick, Archiv als schmale Schiene */
+@media (min-width:1100px){
+  .board{gap:12px}
+  .col{flex:1 1 0; min-width:200px}
+  .col-body{padding:2px 8px 4px}
+  .grip{flex-basis:28px}
+  .card-main{padding:9px 10px}
+}
+@media (min-width:600px){
+  .col.collapsed{flex:0 0 58px; min-width:58px; cursor:pointer}
+  .col.collapsed .col-body, .col.collapsed .col-foot{display:none}
+  .col.collapsed .col-head{flex-direction:column; align-items:center; gap:12px; padding:12px 0}
+  .col.collapsed .col-title{writing-mode:vertical-rl; transform:rotate(180deg); flex:0 0 auto}
+  .col.collapsed .col-arch-toggle{display:none}
+}
+/* iPad hochkant: Reiter oben, rund zwei Spalten sichtbar, seitlich wischen */
+@media (max-width:1099px){
+  .coltabs{display:flex}
+  .hint{display:none}
+  .board{scroll-snap-type:x mandatory; padding-top:10px; gap:12px}
+  .col{flex:0 0 44%; min-width:280px}
+}
+/* Smartphone: eine Spalte pro Bildschirm, Reiter zum Springen und Ablegen */
+@media (max-width:599px){
+  .topbar{padding-bottom:10px; gap:4px 12px}
+  h1{font-size:17px}
+  .subtitle{display:none}
+  .topbar-right{gap:8px}
+  .topbtn{min-height:32px; padding:0 10px; font-size:12.5px}
+  .teambar{gap:8px}
+  .teambar-label{display:none}
+  .member{padding-right:8px; gap:6px}
+  .member-name{font-size:13px}
+  .member-load{display:none}
+  .board{gap:10px; scroll-padding-left:max(12px, env(safe-area-inset-left))}
+  .col{flex:0 0 88%; min-width:0}
+  .col-arch-toggle{display:none}
+  .card-title{font-size:15.5px}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+</style>
+
+<header class="topbar">
+  <div>
+    <h1>iPad-Gruppe &ndash; Kanban-Board</h1>
+    <p class="subtitle">Gemeinsame Planung der iPad-Gruppe</p>
+  </div>
+  <div class="topbar-right">
+    <span class="hint">Karte am Griff ziehen &middot; K&uuml;rzel auf eine Karte ziehen &middot; <b>!</b> markiert als wichtig</span>
+    <button type="button" class="topbtn" id="btn-sync">Stand austauschen</button>
+    <button type="button" class="topbtn" id="btn-logout" hidden>Abmelden</button>
+    <span class="status" id="status"><span class="dot"></span><span id="status-text">verbinde&hellip;</span></span>
+  </div>
+</header>
+
+<nav class="teambar" id="teambar" aria-label="Team"></nav>
+<nav class="coltabs" id="coltabs" aria-label="Spalten"></nav>
+<main class="board" id="board" lang="de" aria-label="Kanban-Board"></main>
+
+<div class="login" id="login" hidden>
+  <form class="login-card" id="login-form" novalidate>
+    <p class="login-eyebrow">iPad-Gruppe</p>
+    <h2>Anmelden</h2>
+    <p class="login-sub">Kanban-Board der iPad-Gruppe</p>
+    <p class="login-msg" id="login-msg" role="alert" hidden></p>
+    <div class="field">
+      <label for="l-email">E-Mail</label>
+      <input id="l-email" name="email" type="email" autocomplete="username" inputmode="email" autocapitalize="off" spellcheck="false" required>
+    </div>
+    <div class="field">
+      <label for="l-pass">Passwort</label>
+      <input id="l-pass" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn primary login-btn" id="login-btn">Anmelden</button>
+    <div class="login-links">
+      <button type="button" class="linkbtn" id="login-reset">Passwort vergessen?</button>
+    </div>
+    <p class="login-foot">Die Anmeldung bleibt auf diesem Ger&auml;t gespeichert, bis du dich abmeldest.</p>
+  </form>
+
+  <div class="login-card" id="denied" hidden>
+    <p class="login-eyebrow">iPad-Gruppe</p>
+    <h2>Kein Zugriff</h2>
+    <p class="login-sub">Du bist als <strong id="d-email"></strong> angemeldet, aber dieses Konto ist f&uuml;r das Board noch nicht freigeschaltet.
+      Damit es funktioniert, muss diese Konto-ID in den Datenbankregeln stehen:</p>
+    <code class="uid" id="d-uid"></code>
+    <div class="login-actions">
+      <button type="button" class="btn primary" id="d-retry">Erneut versuchen</button>
+      <button type="button" class="btn" id="d-logout">Abmelden</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <form class="sheet" id="sheet">
+    <h2 id="sheet-title">Neue Karte</h2>
+    <p class="sheet-sub" id="sheet-sub">Spalte &bdquo;Zu erledigen&ldquo;</p>
+    <div class="field">
+      <label for="f-title">Titel</label>
+      <input id="f-title" name="title" maxlength="120" required autocomplete="off" placeholder="Worum geht es?">
+    </div>
+    <div class="field">
+      <label>Zust&auml;ndig</label>
+      <div class="picker" id="f-members"></div>
+    </div>
+    <div class="field">
+      <label>Priorit&auml;t</label>
+      <button type="button" class="imp-toggle" id="f-imp" aria-pressed="false"><span class="imp-dot"></span>Als wichtig markieren</button>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="f-due">Frist</label>
+        <input id="f-due" name="due" type="date">
+      </div>
+      <div class="field">
+        <label for="f-col">Spalte</label>
+        <select id="f-col" name="column"></select>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn danger" id="btn-delete" hidden>L&ouml;schen</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="btn-cancel">Abbrechen</button>
+      <button type="submit" class="btn primary">Speichern</button>
+    </div>
+  </form>
+</div>
+
+<div class="overlay" id="team-overlay" role="dialog" aria-modal="true" aria-labelledby="team-title">
+  <div class="sheet">
+    <h2 id="team-title">Team verwalten</h2>
+    <p class="sheet-sub">Fotos erscheinen neben dem K&uuml;rzel und auf den Karten.</p>
+    <ul class="team-rows" id="team-rows"></ul>
+    <div class="team-add">
+      <input id="team-new" maxlength="6" placeholder="Neues K&uuml;rzel, z. B. MST" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Neues K&uuml;rzel">
+      <button type="button" class="btn" id="team-add-btn">Hinzuf&uuml;gen</button>
+    </div>
+    <div class="actions" style="margin-top:16px">
+      <span class="spacer"></span>
+      <button type="button" class="btn primary" id="team-close">Fertig</button>
+    </div>
+  </div>
+</div>
+<input type="file" id="avatar-file" accept="image/*" hidden>
+
+<div class="overlay" id="sync-overlay" role="dialog" aria-modal="true" aria-labelledby="sync-title">
+  <div class="sheet">
+    <h2 id="sync-title">Stand austauschen</h2>
+    <p class="sheet-sub">Dieses Board liegt auf jedem Ger&auml;t f&uuml;r sich. Mit diesen beiden Schritten gebt ihr den aktuellen Stand weiter.</p>
+
+    <div class="step">
+      <h3>Weitergeben</h3>
+      <p id="sync-info">&nbsp;</p>
+      <textarea class="code" id="sync-out" readonly aria-label="Aktueller Stand als Code"></textarea>
+      <div class="inline-actions">
+        <button type="button" class="btn primary" id="sync-copy">Kopieren</button>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>&Uuml;bernehmen</h3>
+      <p>Erhaltenen Code hier einf&uuml;gen. Das ersetzt das Board auf diesem Ger&auml;t vollst&auml;ndig.</p>
+      <textarea class="code" id="sync-in" placeholder="Code hier einf&uuml;gen&hellip;" aria-label="Erhaltenen Stand einf&uuml;gen"></textarea>
+      <div class="inline-actions">
+        <button type="button" class="btn" id="sync-apply">Stand &uuml;bernehmen</button>
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:18px">
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="sync-close">Schlie&szlig;en</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ==========================================================================
+     FIREBASE-ZUGANG  –  hier die Adresse der Realtime Database eintragen
+     (Firebase-Konsole → Realtime Database, die URL oben über der Datenliste).
+     Bleibt sie leer, läuft das Board wie bisher nur lokal auf dem Gerät.
+     ========================================================================== */
+  var FIREBASE_DB_URL = "https://ipad-gruppe-kanban-default-rtdb.europe-west1.firebasedatabase.app";
+  var FIREBASE_API_KEY = "AIzaSyBnd7SzbBKaIK6poVLf8ztyCnEMSJ2vMTk";   // Projekteinstellungen → Meine Apps → apiKey
+  /* ====================================================================== */
+
+  var FB_ROOT = "ipadgruppe";      // Zweig in der Datenbank
+  var SAFETY_POLL_MS = 30000;  // Rückfallabgleich, falls der Livestrom aussetzt
+
+  var COLUMNS = [
+    {id:"flow",    label:"Workflow",              acc:"var(--c-news)",  soft:"var(--c-news-soft)"},
+    {id:"todo",    label:"Zu erledigen",          acc:"var(--c-todo)",  soft:"var(--c-todo-soft)"},
+    {id:"doing",   label:"In Bearbeitung",        acc:"var(--c-doing)", soft:"var(--c-doing-soft)"},
+    {id:"done",    label:"Erledigt",              acc:"var(--c-done)",  soft:"var(--c-done-soft)"},
+    {id:"hold",    label:"Momentan nicht lösbar", acc:"var(--c-hold)",  soft:"var(--c-hold-soft)"},
+    {id:"archive", label:"Archiv",                acc:"var(--c-arch)",  soft:"var(--c-arch-soft)"}
+  ];
+  var COL_IDS = COLUMNS.map(function(c){return c.id;});
+  var DEFAULT_ROSTER = ["RUB", "KRS", "CRY", "KRG", "SCD", "GER", "LUB"];
+  var LS_CARDS = "board-ipadgruppe-karten-v1";
+  var LS_TEAM = "board-ipadgruppe-team-v1";
+  var LS_AVATARS = "board-ipadgruppe-fotos-v1";
+  var LS_ARCH = "board-ipadgruppe-archiv-offen-v1";
+  var LS_OPEN = "board-ipadgruppe-offene-notizen-v1";
+
+  var board = document.getElementById("board");
+  var overlay = document.getElementById("overlay");
+  var sheet = document.getElementById("sheet");
+  var statusEl = document.getElementById("status");
+  var statusText = document.getElementById("status-text");
+
+  var cards = new Map();
+  var roster = DEFAULT_ROSTER.slice();
+
+  /* Fotos neben dem Kürzel. Vorgabe für die Vorschau; im Board selbst
+     über „Team verwalten“ änderbar. Ein leerer Eintrag heißt: kein Foto. */
+  var DEFAULT_AVATARS = {
+    RUB: "data:image/jpeg;base64,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"
+  };
+  var avatars = {};
+  function avatarOf(m){
+    return Object.prototype.hasOwnProperty.call(avatars, m) ? avatars[m] : (DEFAULT_AVATARS[m] || "");
+  }
+  var mode = "pending";
+
+  function memberVar(initials, soft){
+    var i = roster.indexOf(initials);
+    if (i < 0) i = 4;
+    return "var(--m" + (i % 7) + (soft ? "s" : "") + ")";
+  }
+  function newId(){ return "k" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  /* ---------- Speichern ---------- */
+  function saveLocalCards(){
+    if (mode !== "local") return;
+    try{
+      var o = {}; cards.forEach(function(v,k){ o[k] = v; });
+      localStorage.setItem(LS_CARDS, JSON.stringify(o));
+    }catch(e){}
+  }
+  function saveLocalTeam(){
+    if (mode !== "local") return;
+    try{ localStorage.setItem(LS_TEAM, JSON.stringify(roster)); }catch(e){}
+    try{ localStorage.setItem(LS_AVATARS, JSON.stringify(avatars)); }catch(e){}
+  }
+  function putCard(id, data){
+    cards.set(id, data);
+    render();
+    if (mode === "cloud") fbPut("cards/" + id, cardToRow(data)).catch(reportWriteError);
+    else saveLocalCards();
+  }
+  function removeCard(id){
+    cards.delete(id);
+    render();
+    if (mode === "cloud") fbDelete("cards/" + id).catch(reportWriteError);
+    else saveLocalCards();
+  }
+  function putTeam(){
+    render();
+    if (mode === "cloud") fbPut("team", {members: roster, avatars: avatars}).catch(reportWriteError);
+    else saveLocalTeam();
+  }
+  function putRoster(list){
+    roster = list;
+    putTeam();
+  }
+  function reportWriteError(err){
+    if (mode === "cloud"){
+      setStatus("warn", "Nicht gespeichert – offline?");
+      statusEl.title = "Die Änderung erreicht den Server gerade nicht. Sie ist auf diesem Gerät sichtbar, "
+        + "aber noch nicht bei der Kollegin. Verbindung prüfen und die Karte erneut bewegen.";
+      return;
+    }
+    var code = err && err.code;
+    var msg = "Änderung nicht gespeichert";
+    if (code === "quota_exceeded") msg = "Board voll – Karten löschen";
+    else if (code === "resource_exhausted") msg = "Zu viele Änderungen – kurz warten";
+    else if (code === "revoked" || code === "not_granted") msg = "Kein Schreibzugriff";
+    setStatus("warn", msg);
+    statusEl.title = (err && err.message) || "";
+  }
+  function setStatus(kind, text){
+    statusEl.className = "status" + (kind === "shared" ? " ok" : kind === "local" ? " local" : kind === "warn" ? " warn" : "");
+    statusText.textContent = text;
+  }
+
+  /* ---------- Firebase Realtime Database ----------------------------------
+     Ohne Fremdbibliothek: Geschrieben wird über die REST-Schnittstelle, und
+     für den Livestrom genügt EventSource – Firebase schickt jede Änderung von
+     sich aus. Die Seite bleibt damit eine einzige Datei. */
+  var fbState = {};
+  var fbStream = null;
+  var fbSeeded = false;
+
+  function fbUrl(path){
+    var u = FIREBASE_DB_URL.replace(/\/+$/, "") + "/" + FB_ROOT + (path ? "/" + path : "") + ".json";
+    if (auth && auth.token) u += "?auth=" + encodeURIComponent(auth.token);
+    return u;
+  }
+  /* Abgelaufenes Token: einmal erneuern und dieselbe Anfrage wiederholen. */
+  function fbFetch(path, opts){
+    var go = function(){ return fetch(fbUrl(path), opts || {}); };
+    return go().then(function(r){
+      if (r.status === 401 && auth && auth.refresh) return refreshAuth().then(go);
+      return r;
+    }).then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r;
+    });
+  }
+  function fbPut(path, value){
+    return fbFetch(path, {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(value)});
+  }
+  function fbDelete(path){
+    return fbFetch(path, {method: "DELETE"});
+  }
+
+  function cardToRow(d){
+    return {
+      col: d.column,
+      sort: typeof d.order === "number" ? d.order : 1000,
+      title: d.title || "",
+      notes: notesOf(d),
+      important: !!d.important,
+      members: membersOf(d),
+      due: d.due || "",
+      sample: !!d.sample
+    };
+  }
+  function rowToCard(r){
+    return {
+      column: r.col,
+      order: typeof r.sort === "number" ? r.sort : Number(r.sort) || 1000,
+      title: r.title || "",
+      notes: Array.isArray(r.notes) ? r.notes.filter(Boolean) : [],
+      important: !!r.important,
+      members: Array.isArray(r.members) ? r.members : [],
+      due: r.due || "",
+      sample: !!r.sample
+    };
+  }
+
+  /* Firebase meldet Änderungen als put (ersetzen) oder patch (zusammenführen),
+     jeweils mit dem Pfad innerhalb des Zweigs. Beides hier auf den lokalen
+     Zustandsbaum anwenden. */
+  function fbApply(kind, path, data){
+    var parts = String(path || "/").split("/").filter(Boolean);
+    if (!parts.length){
+      if (kind === "put") fbState = (data && typeof data === "object") ? data : {};
+      else if (data && typeof data === "object") {
+        Object.keys(data).forEach(function(k){
+          if (data[k] === null) delete fbState[k]; else fbState[k] = data[k];
+        });
+      }
+      return;
+    }
+    var node = fbState;
+    for (var i = 0; i < parts.length - 1; i++){
+      if (!node[parts[i]] || typeof node[parts[i]] !== "object") node[parts[i]] = {};
+      node = node[parts[i]];
+    }
+    var key = parts[parts.length - 1];
+    if (kind === "put"){
+      if (data === null) delete node[key]; else node[key] = data;
+    } else {
+      if (!node[key] || typeof node[key] !== "object") node[key] = {};
+      if (data && typeof data === "object"){
+        Object.keys(data).forEach(function(k){
+          if (data[k] === null) delete node[key][k]; else node[key][k] = data[k];
+        });
+      }
+    }
+  }
+
+  function fbSync(){
+    var raw = fbState && fbState.cards ? fbState.cards : {};
+    var next = new Map();
+    Object.keys(raw).forEach(function(id){
+      var r = raw[id];
+      if (r && typeof r === "object" && COL_IDS.indexOf(r.col) >= 0) next.set(id, rowToCard(r));
+    });
+    cards = next;
+    var t = fbState && fbState.team ? fbState.team.members : null;
+    if (Array.isArray(t) && t.length) roster = t.filter(Boolean);
+    var av = fbState && fbState.team ? fbState.team.avatars : null;
+    avatars = (av && typeof av === "object") ? av : {};
+    render();
+  }
+
+  function fbOnline(){
+    setStatus("shared", "Synchronisiert");
+    statusEl.title = "Änderungen erscheinen sofort auch bei den anderen.";
+  }
+  function fbOffline(err){
+    setStatus("warn", "Keine Verbindung");
+    statusEl.title = "Das Board zeigt den zuletzt geladenen Stand und verbindet sich von selbst neu."
+      + (err && err.message ? " (" + err.message + ")" : "");
+  }
+
+  function seedIfEmpty(){
+    if (fbSeeded) return;
+    fbSeeded = true;
+    if (fbState && (fbState.cards || fbState.team)) return;
+    // Echtes Board startet leer – nur die Teamliste wird einmalig angelegt.
+    roster = DEFAULT_ROSTER.slice();
+    render();
+    fbPut("team", {members: roster}).catch(reportWriteError);
+  }
+
+  function pushWholeBoard(){
+    var out = {};
+    cards.forEach(function(v, k){ out[k] = cardToRow(v); });
+    return fbPut("", {cards: out, team: {members: roster, avatars: avatars}});
+  }
+
+  function fbPoll(){
+    if (document.hidden || drag) return Promise.resolve();
+    return fbFetch("", {cache: "no-store"}).then(function(r){ return r.json(); }).then(function(data){
+      fbState = (data && typeof data === "object") ? data : {};
+      fbSync();
+      fbOnline();
+    });
+  }
+
+  function openStream(){
+    if (fbStream){ fbStream.close(); fbStream = null; }
+    if (typeof EventSource !== "function") return;
+    try{ fbStream = new EventSource(fbUrl("")); }catch(e){ fbStream = null; return; }
+    var es = fbStream;
+    es.addEventListener("open", fbOnline);
+    ["put", "patch"].forEach(function(kind){
+      es.addEventListener(kind, function(ev){
+        var msg;
+        try{ msg = JSON.parse(ev.data); }catch(e){ return; }
+        if (!msg) return;
+        fbApply(kind, msg.path, msg.data);
+        if (!drag) fbSync();
+        fbOnline();
+        seedIfEmpty();
+      });
+    });
+    // Token abgelaufen: erneuern und mit frischem Token neu verbinden.
+    es.addEventListener("auth_revoked", function(){
+      es.close();
+      refreshAuth().then(openStream).catch(handleAuthLoss);
+    });
+    // Firebase bricht ab, wenn die Regeln das Lesen verbieten.
+    es.addEventListener("cancel", function(){
+      es.close();
+      if (fbStream === es) fbStream = null;
+      showDenied();
+    });
+    es.addEventListener("error", function(){
+      // CLOSED heißt: Der Server hat abgelehnt. Per Einzelabfrage klären, warum.
+      if (es.readyState === 2){
+        if (fbStream === es) fbStream = null;
+        fbPoll().then(seedIfEmpty).catch(onCloudError);
+      } else if (es.readyState !== 1){
+        fbOffline();
+      }
+    });
+  }
+
+  /* 401/403 bei gültiger Anmeldung = Konto steht nicht in den Regeln. */
+  function onCloudError(e){
+    var m = String((e && e.message) || "");
+    if (/HTTP 40[13]/.test(m)){ showDenied(); return; }
+    if (isNetworkError(e) || !auth){ fbOffline(e); return; }
+    if (/^HTTP /.test(m)){ fbOffline(e); return; }
+    handleAuthLoss(e);
+  }
+
+  var cloudStarted = false;
+  function startCloud(){
+    mode = "cloud";
+    setStatus("", "verbinde…");
+    btnLogout.hidden = !auth;
+    if (auth) btnLogout.title = "Angemeldet als " + (auth.email || "");
+    openStream();
+    if (!fbStream) fbPoll().then(seedIfEmpty).catch(onCloudError);
+    if (cloudStarted) return;
+    cloudStarted = true;
+
+    // Rückfallabgleich, falls der Livestrom unterwegs blockiert wird.
+    setInterval(function(){
+      if (!auth && FIREBASE_API_KEY) return;
+      if (fbStream && fbStream.readyState === 1) return;
+      if (!loginEl.hidden) return;
+      fbPoll().then(seedIfEmpty).catch(onCloudError);
+    }, SAFETY_POLL_MS);
+    window.addEventListener("online", function(){
+      if (auth || !FIREBASE_API_KEY) fbPoll().catch(fbOffline);
+    });
+    // Nach dem Aufwecken eines Tablets: Token rechtzeitig erneuern.
+    document.addEventListener("visibilitychange", function(){
+      if (document.hidden || !auth) return;
+      if (auth.exp - Date.now() < 5 * 60 * 1000) refreshAuth().then(openStream).catch(handleAuthLoss);
+    });
+  }
+
+  /* ---------- Anmeldung über Firebase Authentication (REST) ----------
+     Kein SDK nötig: Anmelden, Token erneuern und Passwort-Mail sind je ein
+     einzelner Aufruf. Auf dem Gerät gespeichert wird nur das Erneuerungs-
+     token – nie das Passwort und keine Boardinhalte. */
+  var LS_AUTH = "board-ipadgruppe-anmeldung-v1";
+  var auth = null;          // {token, refresh, exp, uid, email}
+  var refreshTimer = null;
+  var loginEl = document.getElementById("login");
+  var loginForm = document.getElementById("login-form");
+  var loginMsg = document.getElementById("login-msg");
+  var loginBtn = document.getElementById("login-btn");
+  var lEmail = document.getElementById("l-email");
+  var lPass = document.getElementById("l-pass");
+  var deniedEl = document.getElementById("denied");
+  var btnLogout = document.getElementById("btn-logout");
+
+  function apiJson(url, body, form){
+    return fetch(url, {
+      method: "POST",
+      headers: {"Content-Type": form ? "application/x-www-form-urlencoded" : "application/json"},
+      body: form ? body : JSON.stringify(body)
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        if (!r.ok) throw new Error((j && j.error && j.error.message) || ("HTTP " + r.status));
+        return j;
+      });
+    });
+  }
+  function idUrl(method){
+    return "https://identitytoolkit.googleapis.com/v1/accounts:" + method + "?key=" + encodeURIComponent(FIREBASE_API_KEY);
+  }
+
+  function setAuth(token, refresh, expiresIn, uid, email){
+    auth = {token: token, refresh: refresh, exp: Date.now() + (Number(expiresIn) || 3600) * 1000,
+            uid: uid, email: email};
+    try{ localStorage.setItem(LS_AUTH, JSON.stringify({refresh: refresh, uid: uid, email: email})); }catch(e){}
+    clearTimeout(refreshTimer);
+    var wait = Math.max(30000, auth.exp - Date.now() - 5 * 60 * 1000);
+    refreshTimer = setTimeout(function(){
+      refreshAuth().then(openStream).catch(handleAuthLoss);
+    }, wait);
+  }
+
+  function signIn(email, password){
+    return apiJson(idUrl("signInWithPassword"), {email: email, password: password, returnSecureToken: true})
+      .then(function(j){ setAuth(j.idToken, j.refreshToken, j.expiresIn, j.localId, j.email || email); });
+  }
+
+  function refreshAuth(){
+    if (!auth || !auth.refresh) return Promise.reject(new Error("NO_SESSION"));
+    var email = auth.email;
+    return apiJson("https://securetoken.googleapis.com/v1/token?key=" + encodeURIComponent(FIREBASE_API_KEY),
+      "grant_type=refresh_token&refresh_token=" + encodeURIComponent(auth.refresh), true)
+      .then(function(j){ setAuth(j.id_token, j.refresh_token, j.expires_in, j.user_id, email); });
+  }
+
+  function isNetworkError(e){ return e instanceof TypeError; }
+
+  function authMessage(e){
+    var m = String((e && e.message) || "");
+    if (isNetworkError(e)) return "Keine Verbindung zum Anmeldedienst. Bitte das Netz prüfen und erneut versuchen.";
+    if (/INVALID_LOGIN_CREDENTIALS|INVALID_PASSWORD|EMAIL_NOT_FOUND/.test(m)) return "E-Mail oder Passwort stimmen nicht.";
+    if (/INVALID_EMAIL/.test(m)) return "Das ist keine gültige E-Mail-Adresse.";
+    if (/MISSING_PASSWORD/.test(m)) return "Bitte das Passwort eingeben.";
+    if (/USER_DISABLED/.test(m)) return "Dieses Konto ist deaktiviert.";
+    if (/TOO_MANY_ATTEMPTS/.test(m)) return "Zu viele Versuche. Bitte ein paar Minuten warten.";
+    if (/OPERATION_NOT_ALLOWED|PASSWORD_LOGIN_DISABLED/.test(m)) return "Die Anmeldung per E-Mail und Passwort ist in Firebase noch nicht aktiviert.";
+    if (/API_KEY|API key/i.test(m)) return "Der Zugangsschlüssel dieses Boards ist ungültig (" + m + ").";
+    return "Anmeldung fehlgeschlagen (" + m + ").";
+  }
+
+  function showMsg(text, info){
+    loginMsg.textContent = text || "";
+    loginMsg.hidden = !text;
+    loginMsg.classList.toggle("info", !!info);
+  }
+
+  function showLogin(message, info){
+    clearBoard();
+    deniedEl.hidden = true;
+    loginForm.hidden = false;
+    loginEl.hidden = false;
+    btnLogout.hidden = true;
+    setStatus("", "Abgemeldet");
+    showMsg(message, info);
+    try{
+      var saved = JSON.parse(localStorage.getItem(LS_AUTH) || "null");
+      if (saved && saved.email && !lEmail.value) lEmail.value = saved.email;
+    }catch(e){}
+    setTimeout(function(){ (lEmail.value ? lPass : lEmail).focus(); }, 30);
+  }
+
+  function showDenied(){
+    clearBoard();
+    loginForm.hidden = true;
+    deniedEl.hidden = false;
+    loginEl.hidden = false;
+    document.getElementById("d-email").textContent = (auth && auth.email) || "–";
+    document.getElementById("d-uid").textContent = (auth && auth.uid) || "–";
+    setStatus("warn", "Kein Zugriff");
+  }
+
+  function hideLogin(){ loginEl.hidden = true; }
+
+  function clearBoard(){
+    if (fbStream){ fbStream.close(); fbStream = null; }
+    cards = new Map();
+    roster = DEFAULT_ROSTER.slice();
+    fbState = {};
+    fbSeeded = false;
+    render();
+  }
+
+  function signOut(message){
+    clearTimeout(refreshTimer);
+    auth = null;
+    try{
+      var saved = JSON.parse(localStorage.getItem(LS_AUTH) || "null");
+      // E-Mail zum Vorausfüllen behalten, Token löschen.
+      if (saved && saved.email) localStorage.setItem(LS_AUTH, JSON.stringify({email: saved.email}));
+      else localStorage.removeItem(LS_AUTH);
+    }catch(e){}
+    showLogin(message);
+  }
+
+  function handleAuthLoss(e){
+    if (isNetworkError(e)){
+      fbOffline(e);
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(function(){ refreshAuth().then(openStream).catch(handleAuthLoss); }, 60000);
+      return;
+    }
+    signOut("Deine Anmeldung ist abgelaufen. Bitte melde dich erneut an.");
+  }
+
+  loginForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    var email = lEmail.value.trim(), pass = lPass.value;
+    if (!email){ showMsg("Bitte die E-Mail-Adresse eingeben."); lEmail.focus(); return; }
+    if (!pass){ showMsg("Bitte das Passwort eingeben."); lPass.focus(); return; }
+    loginBtn.disabled = true; loginBtn.textContent = "Anmelden …";
+    signIn(email, pass).then(function(){
+      lPass.value = "";
+      showMsg("");
+      hideLogin();
+      startCloud();
+    }).catch(function(err){
+      showMsg(authMessage(err));
+      lPass.select();
+    }).then(function(){
+      loginBtn.disabled = false; loginBtn.textContent = "Anmelden";
+    });
+  });
+
+  document.getElementById("login-reset").addEventListener("click", function(){
+    var email = lEmail.value.trim();
+    if (!email){ showMsg("Trag oben deine E-Mail-Adresse ein, dann schicke ich den Link dorthin."); lEmail.focus(); return; }
+    apiJson(idUrl("sendOobCode"), {requestType: "PASSWORD_RESET", email: email}).then(function(){
+      showMsg("Falls es zu dieser Adresse ein Konto gibt, kommt gleich eine E-Mail zum Zurücksetzen des Passworts.", true);
+    }).catch(function(err){
+      if (isNetworkError(err)) showMsg(authMessage(err));
+      else showMsg("Falls es zu dieser Adresse ein Konto gibt, kommt gleich eine E-Mail zum Zurücksetzen des Passworts.", true);
+    });
+  });
+
+  document.getElementById("d-retry").addEventListener("click", function(){
+    hideLogin();
+    refreshAuth().then(startCloud).catch(function(e){
+      if (isNetworkError(e)) showDenied(); else handleAuthLoss(e);
+    });
+  });
+  document.getElementById("d-logout").addEventListener("click", function(){ signOut(); });
+  btnLogout.addEventListener("click", function(){
+    if (confirm("Vom Board abmelden? Auf diesem Gerät musst du dich danach neu anmelden.")) signOut();
+  });
+
+  function bootAuth(){
+    mode = "cloud";
+    var saved = null;
+    try{ saved = JSON.parse(localStorage.getItem(LS_AUTH) || "null"); }catch(e){}
+    if (!saved || !saved.refresh){ showLogin(); return; }
+    auth = {token: null, refresh: saved.refresh, exp: 0, uid: saved.uid, email: saved.email};
+    setStatus("", "Anmeldung …");
+    refreshAuth().then(startCloud).catch(function(e){
+      if (isNetworkError(e)){
+        auth = null;
+        showLogin("Keine Verbindung zum Anmeldedienst. Sobald das Netz steht, bitte erneut anmelden.");
+      } else {
+        signOut("Deine Anmeldung ist abgelaufen. Bitte melde dich erneut an.");
+      }
+    });
+  }
+
+  /* ---------- Darstellung ---------- */
+  function cardList(colId){
+    var out = [];
+    cards.forEach(function(c, id){ if (c && c.column === colId) out.push({id:id, d:c}); });
+    out.sort(function(a,b){
+      var x = typeof a.d.order === "number" ? a.d.order : 0;
+      var y = typeof b.d.order === "number" ? b.d.order : 0;
+      return x - y || (a.id < b.id ? -1 : 1);
+    });
+    return out;
+  }
+  function membersOf(d){ return Array.isArray(d.members) ? d.members : []; }
+  function loadOf(initials){
+    var n = 0;
+    cards.forEach(function(c){
+      if (c.column !== "done" && c.column !== "archive" && membersOf(c).indexOf(initials) >= 0) n++;
+    });
+    return n;
+  }
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+  }
+  function formatDue(iso){
+    var p = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+    if (!p) return "";
+    var d = new Date(+p[1], +p[2]-1, +p[3]);
+    var s = d.toLocaleDateString("de-DE", {weekday:"short", day:"2-digit", month:"2-digit"});
+    if (+p[1] !== new Date().getFullYear()) s += p[1];
+    return s;
+  }
+
+  var GRIP_SVG = '<svg width="12" height="20" viewBox="0 0 12 20" fill="currentColor" aria-hidden="true">'
+    + '<circle cx="3" cy="4" r="1.6"/><circle cx="9" cy="4" r="1.6"/>'
+    + '<circle cx="3" cy="10" r="1.6"/><circle cx="9" cy="10" r="1.6"/>'
+    + '<circle cx="3" cy="16" r="1.6"/><circle cx="9" cy="16" r="1.6"/></svg>';
+
+  function buildCard(id, d){
+    var el = document.createElement("article");
+    el.className = "card" + (d.important ? " important" : ""); el.dataset.id = id; el.tabIndex = 0;
+    el.setAttribute("aria-label", (d.title || "Karte") + " – Eingabetaste zum Bearbeiten");
+
+    var grip = document.createElement("div");
+    grip.className = "grip"; grip.innerHTML = GRIP_SVG; grip.setAttribute("aria-hidden","true");
+    el.appendChild(grip);
+
+    var main = document.createElement("div");
+    main.className = "card-main";
+    var h = document.createElement("p");
+    h.className = "card-title"; h.textContent = d.title || "(ohne Titel)";
+    main.appendChild(h);
+
+    var meta = document.createElement("div");
+    meta.className = "card-meta";
+    if (d.important){
+      var ib = document.createElement("span");
+      ib.className = "chip imp-badge"; ib.textContent = "WICHTIG";
+      meta.appendChild(ib);
+    }
+    membersOf(d).forEach(function(m){
+      var t = document.createElement("span");
+      t.className = "tag";
+      var av = avatarOf(m);
+      if (av){
+        var ti = document.createElement("img");
+        ti.className = "tag-av"; ti.src = av; ti.alt = "";
+        t.appendChild(ti); t.classList.add("has-av");
+      }
+      t.appendChild(document.createTextNode(m));
+      t.style.setProperty("--mc", memberVar(m, false));
+      t.title = m + " ist zuständig";
+      meta.appendChild(t);
+    });
+    if (d.owner){
+      var leg = document.createElement("span");
+      leg.className = "chip"; leg.textContent = d.owner;
+      meta.appendChild(leg);
+    }
+    if (d.due){
+      var over = d.due < todayStr() && d.column !== "done" && d.column !== "archive";
+      var due = document.createElement("span");
+      due.className = "chip due" + (over ? " overdue" : "");
+      due.textContent = formatDue(d.due);
+      if (over) due.title = "Frist überschritten";
+      meta.appendChild(due);
+    }
+    if (d.sample){
+      var s = document.createElement("span");
+      s.className = "chip sample"; s.textContent = "Beispiel";
+      s.title = "Beispielkarte – bearbeiten oder löschen";
+      meta.appendChild(s);
+    }
+    var flag = document.createElement("button");
+    flag.type = "button"; flag.className = "flag"; flag.dataset.flag = id;
+    flag.setAttribute("aria-pressed", d.important ? "true" : "false");
+    var fl = d.important ? "Markierung „wichtig“ entfernen" : "Als wichtig markieren";
+    flag.setAttribute("aria-label", fl); flag.title = fl;
+    flag.innerHTML = FLAG_SVG;
+    meta.appendChild(flag);
+    main.appendChild(meta);
+    main.appendChild(buildNotes(id, d));
+    el.appendChild(main);
+    return el;
+  }
+
+  var FLAG_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" '
+    + 'stroke-linecap="round" aria-hidden="true"><path d="M12 4.5v10"/>'
+    + '<circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/></svg>';
+
+  function toggleImportant(id){
+    var d = cards.get(id);
+    if (!d) return;
+    var up = Object.assign({}, d, {important: !d.important});
+    delete up.sample;
+    putCard(id, up);
+  }
+
+  /* ---------- Notizen je Karte ---------- */
+  var CHEV_SVG = '<svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" '
+    + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>';
+
+  var openNotes = {};
+  try{ openNotes = JSON.parse(localStorage.getItem(LS_OPEN) || "{}") || {}; }catch(e){ openNotes = {}; }
+  function rememberOpen(){ try{ localStorage.setItem(LS_OPEN, JSON.stringify(openNotes)); }catch(e){} }
+
+  function notesOf(d){ return Array.isArray(d.notes) ? d.notes.filter(Boolean) : []; }
+
+  function noteStamp(iso){
+    var t = new Date(iso);
+    if (isNaN(t)) return "";
+    var day = t.toLocaleDateString("de-DE", {weekday:"short", day:"2-digit", month:"2-digit"});
+    return day + ", " + t.toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit"});
+  }
+
+  function buildNotes(id, d){
+    var list = notesOf(d);
+    var open = !!openNotes[id];
+    var wrap = document.createElement("div");
+    wrap.className = "notes" + (open ? " open" : "");
+
+    var toggle = document.createElement("button");
+    toggle.type = "button"; toggle.className = "notes-toggle"; toggle.dataset.noteToggle = id;
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    var label = list.length === 0 ? "Notiz hinzufügen"
+              : list.length === 1 ? "1 Notiz" : list.length + " Notizen";
+    toggle.innerHTML = CHEV_SVG + '<span class="notes-count"></span>';
+    toggle.querySelector(".notes-count").textContent = label;
+    if (list.length){
+      var last = document.createElement("span");
+      last.className = "notes-last";
+      last.textContent = noteStamp(list[list.length - 1].at).split(",")[0];
+      last.title = "Letzte Notiz";
+      toggle.appendChild(last);
+    }
+    wrap.appendChild(toggle);
+
+    var body = document.createElement("div");
+    body.className = "notes-body";
+    if (list.length){
+      var ul = document.createElement("ul");
+      ul.className = "notes-list";
+      list.forEach(function(n){
+        var li = document.createElement("li");
+        li.className = "note";
+        var time = document.createElement("span");
+        time.className = "note-time"; time.textContent = noteStamp(n.at);
+        var del = document.createElement("button");
+        del.type = "button"; del.className = "note-del"; del.textContent = "×";
+        del.dataset.noteDel = n.id; del.dataset.card = id;
+        del.setAttribute("aria-label", "Notiz löschen");
+        var text = document.createElement("span");
+        text.className = "note-text"; text.textContent = n.text;
+        li.appendChild(time); li.appendChild(del); li.appendChild(text);
+        ul.appendChild(li);
+      });
+      body.appendChild(ul);
+    }
+    var add = document.createElement("div");
+    add.className = "note-add";
+    var input = document.createElement("input");
+    input.type = "text"; input.className = "note-input"; input.maxLength = 500;
+    input.placeholder = "Neue Notiz …"; input.dataset.card = id;
+    input.setAttribute("aria-label", "Neue Notiz zu „" + (d.title || "Karte") + "“");
+    input.setAttribute("enterkeyhint", "done");
+    var save = document.createElement("button");
+    save.type = "button"; save.className = "note-save"; save.textContent = "+";
+    save.dataset.noteSave = id;
+    save.setAttribute("aria-label", "Notiz speichern");
+    add.appendChild(input); add.appendChild(save);
+    body.appendChild(add);
+    wrap.appendChild(body);
+    return wrap;
+  }
+
+  function focusNoteInput(id){
+    var inp = board.querySelector('.card[data-id="' + id + '"] .note-input');
+    if (inp) inp.focus();
+  }
+
+  function addNote(id){
+    var inp = board.querySelector('.card[data-id="' + id + '"] .note-input');
+    var d = cards.get(id);
+    if (!inp || !d) return;
+    var text = inp.value.trim();
+    if (!text){ inp.focus(); return; }
+    var up = Object.assign({}, d, {
+      notes: notesOf(d).concat([{id: newId(), text: text, at: new Date().toISOString()}])
+    });
+    delete up.sample;
+    openNotes[id] = true; rememberOpen();
+    putCard(id, up);
+    focusNoteInput(id);
+  }
+
+  function deleteNote(cardId, noteId){
+    var d = cards.get(cardId);
+    if (!d) return;
+    if (!confirm("Diese Notiz löschen?")) return;
+    var up = Object.assign({}, d, {
+      notes: notesOf(d).filter(function(n){ return n.id !== noteId; })
+    });
+    delete up.sample;
+    putCard(cardId, up);
+  }
+
+  /* ---------- Teamleiste ---------- */
+  var teambar = document.getElementById("teambar");
+  var coltabs = document.getElementById("coltabs");
+  var PERSON_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
+    + '<circle cx="12" cy="8.6" r="4.2"/><path d="M3.8 20.6c.9-4.1 4.2-6.6 8.2-6.6s7.3 2.5 8.2 6.6z"/></svg>';
+
+  function avatarEl(m){
+    var a = document.createElement("span");
+    a.className = "avatar";
+    a.style.setProperty("--mc", memberVar(m, false));
+    a.setAttribute("aria-hidden", "true");
+    var src = avatarOf(m);
+    if (src){
+      var img = document.createElement("img");
+      img.src = src; img.alt = "";
+      a.appendChild(img);
+    } else {
+      a.innerHTML = PERSON_SVG;
+    }
+    return a;
+  }
+
+  function renderTeamBar(){
+    var old = teambar.querySelector(".team-list");
+    var keep = old ? old.scrollLeft : 0;
+    teambar.textContent = "";
+    var lab = document.createElement("span");
+    lab.className = "teambar-label"; lab.textContent = "Team";
+    teambar.appendChild(lab);
+
+    var list = document.createElement("div");
+    list.className = "team-list";
+    roster.forEach(function(m){
+      var n = loadOf(m);
+      var chip = document.createElement("div");
+      chip.className = "member"; chip.dataset.member = m;
+      chip.tabIndex = 0; chip.setAttribute("role", "button");
+      chip.style.setProperty("--mc", memberVar(m, false));
+      chip.style.setProperty("--mc-soft", memberVar(m, true));
+      chip.setAttribute("aria-label", m + ", " + n + " offene Karten – auf eine Karte ziehen, um sie zuzuweisen");
+      chip.title = n === 1 ? "1 offene Karte" : n + " offene Karten";
+      chip.appendChild(avatarEl(m));
+      var nm = document.createElement("span");
+      nm.className = "member-name"; nm.textContent = m;
+      chip.appendChild(nm);
+      var ld = document.createElement("span");
+      ld.className = "member-load"; ld.textContent = n;
+      chip.appendChild(ld);
+      list.appendChild(chip);
+    });
+    teambar.appendChild(list);
+    list.scrollLeft = keep;
+
+    var ed = document.createElement("button");
+    ed.type = "button"; ed.className = "team-edit"; ed.dataset.teamEdit = "1";
+    ed.textContent = "Verwalten";
+    ed.setAttribute("aria-label", "Team verwalten");
+    teambar.appendChild(ed);
+  }
+
+  /* ---------- Spaltenreiter ---------- */
+  var currentCol = COLUMNS[0].id;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function renderTabs(){
+    coltabs.textContent = "";
+    COLUMNS.forEach(function(col){
+      var items = cardList(col.id);
+      var imp = items.filter(function(it){ return it.d.important; }).length;
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "coltab"; b.dataset.tabCol = col.id;
+      b.style.setProperty("--acc", col.acc);
+      b.setAttribute("aria-current", col.id === currentCol ? "true" : "false");
+      b.innerHTML = '<span class="dot"></span><span class="lbl"></span><span class="n"></span>';
+      b.querySelector(".lbl").textContent = col.label;
+      b.querySelector(".n").textContent = items.length;
+      if (imp){
+        var s = document.createElement("span");
+        s.className = "imp-n"; s.textContent = "! " + imp;
+        s.title = imp === 1 ? "1 wichtige Karte" : imp + " wichtige Karten";
+        b.appendChild(s);
+      }
+      coltabs.appendChild(b);
+    });
+  }
+
+  function updateCurrentCol(){
+    var br = board.getBoundingClientRect();
+    var pad = parseFloat(getComputedStyle(board).paddingLeft) || 0;
+    var best = null, bestD = Infinity;
+    board.querySelectorAll(".col").forEach(function(c){
+      var d = Math.abs(c.getBoundingClientRect().left - br.left - pad);
+      if (d < bestD){ bestD = d; best = c; }
+    });
+    if (!best || best.dataset.col === currentCol) return;
+    currentCol = best.dataset.col;
+    coltabs.querySelectorAll(".coltab").forEach(function(t){
+      var on = t.dataset.tabCol === currentCol;
+      t.setAttribute("aria-current", on ? "true" : "false");
+      if (on){
+        var tr = t.getBoundingClientRect(), cr = coltabs.getBoundingClientRect();
+        if (tr.left < cr.left || tr.right > cr.right) coltabs.scrollLeft += tr.left - cr.left - 12;
+      }
+    });
+  }
+
+  function scrollToCol(id){
+    var col = board.querySelector('.col[data-col="' + id + '"]');
+    if (!col) return;
+    var pad = parseFloat(getComputedStyle(board).paddingLeft) || 0;
+    board.scrollTo({left: col.offsetLeft - pad, behavior: reduceMotion ? "auto" : "smooth"});
+  }
+
+  var scrollRaf = 0;
+  board.addEventListener("scroll", function(){
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(function(){ scrollRaf = 0; updateCurrentCol(); });
+  }, {passive: true});
+
+  coltabs.addEventListener("click", function(e){
+    var t = e.target.closest("[data-tab-col]");
+    if (!t) return;
+    if (t.dataset.tabCol === "archive" && !archOpen && mqWide.matches){ toggleArchive(true); return; }
+    scrollToCol(t.dataset.tabCol);
+  });
+
+  /* ---------- Archiv: auf iPad und Rechner als schmale Schiene ---------- */
+  var archOpen = false;
+  try{ archOpen = localStorage.getItem(LS_ARCH) === "1"; }catch(e){}
+  var mqWide = window.matchMedia("(min-width:600px)");
+  var onWideChange = function(){ render(); };
+  if (mqWide.addEventListener) mqWide.addEventListener("change", onWideChange);
+  else if (mqWide.addListener) mqWide.addListener(onWideChange);
+  function toggleArchive(open){
+    archOpen = open;
+    try{ localStorage.setItem(LS_ARCH, open ? "1" : "0"); }catch(e){}
+    render();
+    if (open) setTimeout(function(){ scrollToCol("archive"); }, 30);
+  }
+
+  function render(){
+    if (drag) return;
+    var active = document.activeElement;
+    var draft = null;
+    if (active && active.classList && active.classList.contains("note-input")){
+      draft = {card: active.dataset.card, value: active.value,
+               a: active.selectionStart, b: active.selectionEnd};
+    }
+    var scrollX = board.scrollLeft;
+    var tops = {};
+    board.querySelectorAll(".col-body").forEach(function(b){ tops[b.dataset.col] = b.scrollTop; });
+
+    board.textContent = "";
+
+    COLUMNS.forEach(function(col){
+      var wrap = document.createElement("section");
+      wrap.className = "col"; wrap.dataset.col = col.id;
+      wrap.style.setProperty("--acc", col.acc);
+      wrap.style.setProperty("--acc-soft", col.soft);
+
+      var items = cardList(col.id);
+      var impN = items.filter(function(it){ return it.d.important; }).length;
+      if (col.id === "archive" && !archOpen && mqWide.matches){
+        wrap.classList.add("collapsed");
+        wrap.title = "Archiv öffnen";
+      }
+
+      var head = document.createElement("div");
+      head.className = "col-head";
+      var title = document.createElement("h2");
+      title.className = "col-title"; title.textContent = col.label;
+      var count = document.createElement("span");
+      count.className = "col-count"; count.textContent = items.length;
+      count.setAttribute("aria-label", items.length + " Karten");
+      head.appendChild(title);
+      if (impN){
+        var ib = document.createElement("span");
+        ib.className = "col-imp"; ib.textContent = "! " + impN;
+        ib.title = impN === 1 ? "1 wichtige Karte" : impN + " wichtige Karten";
+        head.appendChild(ib);
+      }
+      head.appendChild(count);
+      if (col.id === "archive"){
+        var at = document.createElement("button");
+        at.type = "button"; at.className = "col-arch-toggle"; at.dataset.archToggle = "1";
+        at.textContent = "Einklappen";
+        at.setAttribute("aria-label", "Archiv einklappen");
+        head.appendChild(at);
+      }
+      wrap.appendChild(head);
+
+      var body = document.createElement("div");
+      body.className = "col-body"; body.dataset.col = col.id;
+      if (!items.length){
+        var e = document.createElement("div");
+        e.className = "empty"; e.textContent = "Noch keine Karten";
+        body.appendChild(e);
+      } else {
+        items.forEach(function(it){ body.appendChild(buildCard(it.id, it.d)); });
+      }
+      wrap.appendChild(body);
+
+      var foot = document.createElement("div");
+      foot.className = "col-foot";
+      var add = document.createElement("button");
+      add.type = "button"; add.className = "add"; add.dataset.col = col.id;
+      add.innerHTML = '<span class="plus">+</span> Karte hinzufügen';
+      add.setAttribute("aria-label", "Karte in " + col.label + " hinzufügen");
+      foot.appendChild(add);
+      wrap.appendChild(foot);
+
+      board.appendChild(wrap);
+    });
+
+    board.scrollLeft = scrollX;
+    board.querySelectorAll(".col-body").forEach(function(b){
+      if (tops[b.dataset.col] != null) b.scrollTop = tops[b.dataset.col];
+    });
+    renderTeamBar();
+    renderTabs();
+    updateCurrentCol();
+    if (draft){
+      var inp = board.querySelector('.card[data-id="' + draft.card + '"] .note-input');
+      if (inp){
+        inp.value = draft.value; inp.focus();
+        try{ inp.setSelectionRange(draft.a, draft.b); }catch(e){}
+      }
+    }
+  }
+
+  /* ---------- Ziehen: Karten und Teamkürzel ---------- */
+  var drag = null, press = null, suppressUntil = 0;
+  var THRESHOLD = 6;
+
+  document.addEventListener("pointerdown", function(e){
+    if ((e.button != null && e.button !== 0) || drag) return;
+    if (!e.target.closest) return;
+
+    var mem = e.target.closest(".member");
+    if (mem && !e.target.closest(".member-remove")){
+      press = {kind:"member", value:mem.dataset.member, el:mem, pointerId:e.pointerId,
+               startX:e.clientX, startY:e.clientY, moved:false};
+      e.preventDefault();
+      return;
+    }
+
+    if (e.target.closest(".notes") || e.target.closest(".flag")) return;
+    var card = e.target.closest("#board .card");
+    if (!card || card.closest(".collapsed")) return;
+    var onGrip = !!e.target.closest(".grip");
+    // Touch und Stift ziehen nur am Griff, damit die Spalte scrollbar bleibt.
+    if (!onGrip && e.pointerType !== "mouse") return;
+    var r = card.getBoundingClientRect();
+    press = {kind:"card", id:card.dataset.id, el:card, pointerId:e.pointerId,
+             startX:e.clientX, startY:e.clientY,
+             offX:e.clientX - r.left, offY:e.clientY - r.top, moved:false};
+    if (onGrip) e.preventDefault();
+  });
+
+  window.addEventListener("pointermove", function(e){
+    if (!press || e.pointerId !== press.pointerId) return;
+    if (!drag){
+      if (Math.abs(e.clientX - press.startX) < THRESHOLD && Math.abs(e.clientY - press.startY) < THRESHOLD) return;
+      if (press.kind === "card") startCardDrag(e); else startMemberDrag(e);
+    }
+    if (drag.kind === "card") moveCardDrag(e); else moveMemberDrag(e);
+    e.preventDefault();
+  }, {passive:false});
+
+  window.addEventListener("pointerup", endPointer);
+  window.addEventListener("pointercancel", endPointer);
+
+  function startCardDrag(e){
+    var src = press.el, r = src.getBoundingClientRect();
+    var ghost = src.cloneNode(true);
+    ghost.classList.add("ghost");
+    ghost.style.width = r.width + "px"; ghost.style.height = r.height + "px";
+    var colEl = src.closest(".col");
+    ghost.style.setProperty("--acc", colEl.style.getPropertyValue("--acc"));
+    ghost.style.setProperty("--acc-soft", colEl.style.getPropertyValue("--acc-soft"));
+    document.body.appendChild(ghost);
+
+    var ph = document.createElement("div");
+    ph.className = "placeholder"; ph.style.height = r.height + "px";
+    src.parentNode.insertBefore(ph, src);
+    src.remove();
+
+    document.body.classList.add("dragging");
+    drag = {kind:"card", id:press.id, ghost:ghost, ph:ph, x:e.clientX, y:e.clientY, body:null};
+    press.moved = true;
+    requestAnimationFrame(autoScroll);
+  }
+
+  function moveCardDrag(e){
+    drag.x = e.clientX; drag.y = e.clientY;
+    drag.ghost.style.transform = "translate(" + (e.clientX - press.offX) + "px," + (e.clientY - press.offY) + "px) rotate(1.2deg)";
+    var el = document.elementFromPoint(e.clientX, e.clientY);
+    var tab = el && el.closest ? el.closest("[data-tab-col]") : null;
+    markTab(tab);
+    if (tab){ dropAtColumnEnd(tab.dataset.tabCol); return; }
+    placePlaceholder(e.clientX, e.clientY);
+  }
+
+  /* Smartphone: Karte auf einen Spaltenreiter ziehen = ans Ende dieser Spalte */
+  function markTab(tab){
+    if (drag.tab === tab) return;
+    if (drag.tab) drag.tab.classList.remove("drop-target");
+    drag.tab = tab || null;
+    if (tab) tab.classList.add("drop-target");
+  }
+  function dropAtColumnEnd(colId){
+    var colEl = board.querySelector('.col[data-col="' + colId + '"]');
+    if (!colEl) return;
+    board.querySelectorAll(".col").forEach(function(c){ c.classList.toggle("drop-target", c === colEl); });
+    var body = colEl.querySelector(".col-body");
+    var empty = body.querySelector(".empty");
+    if (empty) empty.remove();
+    body.appendChild(drag.ph);
+    drag.body = null;
+  }
+
+  function placePlaceholder(x, y){
+    var el = document.elementFromPoint(x, y);
+    var colEl = el && el.closest ? el.closest(".col:not(.col-team)") : null;
+    if (!colEl){
+      var best = null, bestD = Infinity;
+      board.querySelectorAll(".col:not(.col-team)").forEach(function(c){
+        var r = c.getBoundingClientRect();
+        var d = x < r.left ? r.left - x : (x > r.right ? x - r.right : 0);
+        if (d < bestD){ bestD = d; best = c; }
+      });
+      colEl = best;
+    }
+    if (!colEl) return;
+    board.querySelectorAll(".col").forEach(function(c){ c.classList.toggle("drop-target", c === colEl); });
+
+    var body = colEl.querySelector(".col-body");
+    drag.body = body;
+    var empty = body.querySelector(".empty");
+    if (empty) empty.remove();
+
+    var sib = Array.prototype.filter.call(body.children, function(n){ return n.classList.contains("card"); });
+    var before = null;
+    for (var i = 0; i < sib.length; i++){
+      var r = sib[i].getBoundingClientRect();
+      if (y < r.top + r.height / 2){ before = sib[i]; break; }
+    }
+    if (before) body.insertBefore(drag.ph, before); else body.appendChild(drag.ph);
+  }
+
+  function startMemberDrag(e){
+    var ghost = document.createElement("div");
+    ghost.className = "member-ghost";
+    ghost.textContent = press.value;
+    ghost.style.setProperty("--mc", memberVar(press.value, false));
+    var gsrc = avatarOf(press.value);
+    if (gsrc){
+      ghost.textContent = "";
+      ghost.style.backgroundImage = 'url("' + gsrc + '")';
+      ghost.style.backgroundSize = "cover";
+      ghost.style.backgroundPosition = "center";
+    }
+    document.body.appendChild(ghost);
+    document.body.classList.add("dragging");
+    drag = {kind:"member", value:press.value, ghost:ghost, x:e.clientX, y:e.clientY, target:null, body:null};
+    press.moved = true;
+    requestAnimationFrame(autoScroll);
+  }
+
+  function moveMemberDrag(e){
+    drag.x = e.clientX; drag.y = e.clientY;
+    drag.ghost.style.transform = "translate(" + (e.clientX - 22) + "px," + (e.clientY - 22) + "px)";
+    var el = document.elementFromPoint(e.clientX, e.clientY);
+    var card = el && el.closest ? el.closest(".card") : null;
+    if (card === drag.target) return;
+    clearAssignTarget();
+    drag.target = card;
+    if (!card) return;
+    var d = cards.get(card.dataset.id);
+    if (!d) { drag.target = null; return; }
+    var has = membersOf(d).indexOf(drag.value) >= 0;
+    card.classList.add("assign-target");
+    card.style.setProperty("--mc", memberVar(drag.value, false));
+    card.style.setProperty("--mc-soft", memberVar(drag.value, true));
+    var badge = document.createElement("span");
+    badge.className = "assign-badge" + (has ? " remove" : "");
+    badge.textContent = (has ? "− " : "+ ") + drag.value;
+    card.appendChild(badge);
+    drag.body = card.closest(".col-body");
+  }
+
+  function clearAssignTarget(){
+    if (!drag || !drag.target) return;
+    drag.target.classList.remove("assign-target");
+    var b = drag.target.querySelector(".assign-badge");
+    if (b) b.remove();
+  }
+
+  function autoScroll(){
+    if (!drag) return;
+    var EDGE = 56, STEP = 16;
+    var br = board.getBoundingClientRect();
+    if (!drag.tab && drag.y > br.top && board.scrollWidth > board.clientWidth + 1){
+      if (drag.x < br.left + EDGE) board.scrollLeft -= STEP;
+      else if (drag.x > br.right - EDGE) board.scrollLeft += STEP;
+    }
+    if (drag.body && drag.body.scrollHeight > drag.body.clientHeight + 1){
+      var vr = drag.body.getBoundingClientRect();
+      if (drag.y < vr.top + 44) drag.body.scrollTop -= 12;
+      else if (drag.y > vr.bottom - 44) drag.body.scrollTop += 12;
+    }
+    requestAnimationFrame(autoScroll);
+  }
+
+  function endPointer(e){
+    if (!press || e.pointerId !== press.pointerId) return;
+    if (drag){ if (drag.kind === "card") commitCardDrag(); else commitMemberDrag(); }
+    var wasDrag = !!press.moved;
+    press = null;
+    // Der Klick nach dem Loslassen gehört noch zur Ziehbewegung.
+    if (wasDrag) suppressUntil = Date.now() + 400;
+  }
+
+  function commitCardDrag(){
+    if (drag.tab){ drag.tab.classList.remove("drop-target"); drag.tab = null; }
+    var colEl = drag.ph.closest(".col");
+    var targetCol = colEl ? colEl.dataset.col : null;
+    var sib = Array.prototype.filter.call(drag.ph.parentNode.children, function(n){
+      return n.classList.contains("card") || n === drag.ph;
+    });
+    var idx = sib.indexOf(drag.ph);
+    var prevEl = idx > 0 ? sib[idx-1] : null;
+    var nextEl = idx >= 0 && idx < sib.length-1 ? sib[idx+1] : null;
+
+    drag.ghost.remove(); drag.ph.remove();
+    document.body.classList.remove("dragging");
+    board.querySelectorAll(".col").forEach(function(c){ c.classList.remove("drop-target"); });
+    var id = drag.id; drag = null;
+
+    var d = cards.get(id);
+    if (!d || !targetCol || COL_IDS.indexOf(targetCol) < 0){ render(); return; }
+
+    var prev = prevEl ? cards.get(prevEl.dataset.id) : null;
+    var next = nextEl ? cards.get(nextEl.dataset.id) : null;
+    var po = prev && typeof prev.order === "number" ? prev.order : null;
+    var no = next && typeof next.order === "number" ? next.order : null;
+    var order = po != null && no != null ? (po + no) / 2
+              : po != null ? po + 1000
+              : no != null ? no - 1000 : 1000;
+
+    if (d.column === targetCol && d.order === order){ render(); return; }
+    var up = Object.assign({}, d, {column:targetCol, order:order});
+    delete up.sample;
+    putCard(id, up);
+  }
+
+  function commitMemberDrag(){
+    var card = drag.target;
+    var value = drag.value;
+    clearAssignTarget();
+    drag.ghost.remove();
+    document.body.classList.remove("dragging");
+    drag = null;
+
+    if (!card){ render(); return; }
+    var id = card.dataset.id;
+    var d = cards.get(id);
+    if (!d){ render(); return; }
+    var list = membersOf(d).slice();
+    var i = list.indexOf(value);
+    if (i >= 0) list.splice(i, 1); else list.push(value);
+    var up = Object.assign({}, d, {members:list});
+    delete up.sample;
+    putCard(id, up);
+  }
+
+  /* ---------- Karten anlegen und bearbeiten ---------- */
+  var editingId = null, editingCol = "todo", editMembers = [], lastFocus = null;
+
+  board.addEventListener("click", function(e){
+    if (Date.now() < suppressUntil) return;
+    var fl = e.target.closest("[data-flag]");
+    if (fl){ toggleImportant(fl.dataset.flag); return; }
+    if (e.target.closest("[data-arch-toggle]")){ toggleArchive(false); return; }
+    var rail = e.target.closest(".col.collapsed");
+    if (rail){ toggleArchive(true); return; }
+    var add = e.target.closest(".add[data-col]");
+    if (add){ openSheet(null, add.dataset.col); return; }
+
+    var tgl = e.target.closest("[data-note-toggle]");
+    if (tgl){
+      var tid = tgl.dataset.noteToggle;
+      var notesEl = tgl.parentNode;
+      var nowOpen = !notesEl.classList.contains("open");
+      notesEl.classList.toggle("open", nowOpen);
+      tgl.setAttribute("aria-expanded", nowOpen ? "true" : "false");
+      if (nowOpen) openNotes[tid] = true; else delete openNotes[tid];
+      rememberOpen();
+      if (nowOpen && !notesOf(cards.get(tid) || {}).length) focusNoteInput(tid);
+      return;
+    }
+    var sv = e.target.closest("[data-note-save]");
+    if (sv){ addNote(sv.dataset.noteSave); return; }
+    var nd = e.target.closest("[data-note-del]");
+    if (nd){ deleteNote(nd.dataset.card, nd.dataset.noteDel); return; }
+    if (e.target.closest(".notes")) return;
+
+    var card = e.target.closest(".card");
+    if (card) openSheet(card.dataset.id, null);
+  });
+
+  board.addEventListener("keydown", function(e){
+    if (e.target.classList && e.target.classList.contains("note-input")){
+      if (e.key === "Enter" && !e.isComposing){ e.preventDefault(); addNote(e.target.dataset.card); }
+      return;
+    }
+    if (e.key !== "Enter" && e.key !== " ") return;
+    // Nur die Karte selbst öffnet den Dialog, nicht Knöpfe darin.
+    if (e.target.classList && e.target.classList.contains("card")){
+      e.preventDefault(); openSheet(e.target.dataset.id, null);
+    }
+  });
+
+  var fTitle = document.getElementById("f-title");
+  var fDue = document.getElementById("f-due");
+  var fCol = document.getElementById("f-col");
+  var fMembers = document.getElementById("f-members");
+  var fImp = document.getElementById("f-imp");
+  fImp.addEventListener("click", function(){
+    fImp.setAttribute("aria-pressed", fImp.getAttribute("aria-pressed") === "true" ? "false" : "true");
+  });
+  var btnDelete = document.getElementById("btn-delete");
+
+  COLUMNS.forEach(function(c){
+    var o = document.createElement("option");
+    o.value = c.id; o.textContent = c.label;
+    fCol.appendChild(o);
+  });
+
+  function renderPicker(){
+    fMembers.textContent = "";
+    if (!roster.length){
+      var p = document.createElement("span");
+      p.className = "picker-empty";
+      p.textContent = "Noch keine Teammitglieder angelegt.";
+      fMembers.appendChild(p);
+      return;
+    }
+    roster.forEach(function(m){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "pick"; b.dataset.member = m;
+      b.style.setProperty("--mc", memberVar(m, false));
+      b.style.setProperty("--mc-soft", memberVar(m, true));
+      b.setAttribute("aria-pressed", editMembers.indexOf(m) >= 0 ? "true" : "false");
+      var dot = document.createElement("span");
+      dot.className = "dotm"; dot.textContent = m.slice(0,3); dot.setAttribute("aria-hidden","true");
+      b.appendChild(dot);
+      b.appendChild(document.createTextNode(m));
+      fMembers.appendChild(b);
+    });
+  }
+  fMembers.addEventListener("click", function(e){
+    var b = e.target.closest(".pick");
+    if (!b) return;
+    var m = b.dataset.member;
+    var i = editMembers.indexOf(m);
+    if (i >= 0) editMembers.splice(i,1); else editMembers.push(m);
+    b.setAttribute("aria-pressed", i >= 0 ? "false" : "true");
+  });
+
+  function openSheet(id, colId){
+    editingId = id;
+    var d = id ? cards.get(id) : null;
+    editingCol = d ? d.column : (colId || "todo");
+    var col = COLUMNS.filter(function(c){ return c.id === editingCol; })[0] || COLUMNS[1];
+
+    document.getElementById("sheet-title").textContent = id ? "Karte bearbeiten" : "Neue Karte";
+    document.getElementById("sheet-sub").textContent = "Spalte „" + col.label + "“";
+    sheet.style.setProperty("--acc", col.acc);
+    fTitle.value = d ? (d.title || "") : "";
+    fDue.value = d ? (d.due || "") : "";
+    fCol.value = editingCol;
+    editMembers = d ? membersOf(d).slice() : [];
+    fImp.setAttribute("aria-pressed", d && d.important ? "true" : "false");
+    renderPicker();
+    btnDelete.hidden = !id;
+
+    lastFocus = document.activeElement;
+    overlay.classList.add("open");
+    setTimeout(function(){ fTitle.focus(); }, 30);
+  }
+  function closeSheet(){
+    overlay.classList.remove("open");
+    editingId = null;
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  sheet.addEventListener("submit", function(e){
+    e.preventDefault();
+    var title = fTitle.value.trim();
+    if (!title){ fTitle.focus(); return; }
+    var col = fCol.value;
+    var base = editingId ? cards.get(editingId) : null;
+    var order;
+    if (base && base.column === col && typeof base.order === "number") order = base.order;
+    else {
+      var list = cardList(col);
+      var last = list.length ? list[list.length-1].d.order : 0;
+      order = (typeof last === "number" ? last : 0) + 1000;
+    }
+    putCard(editingId || newId(), {
+      title:title, notes: base ? notesOf(base) : [], members:editMembers.slice(),
+      important: fImp.getAttribute("aria-pressed") === "true",
+      due:fDue.value || "", column:col, order:order,
+      updatedAt:new Date().toISOString()
+    });
+    closeSheet();
+  });
+
+  document.getElementById("btn-cancel").addEventListener("click", closeSheet);
+  btnDelete.addEventListener("click", function(){
+    if (!editingId) return;
+    var d = cards.get(editingId);
+    var name = d && d.title ? "„" + d.title + "“" : "diese Karte";
+    if (confirm("Karte " + name + " löschen?")){ removeCard(editingId); closeSheet(); }
+  });
+  overlay.addEventListener("mousedown", function(e){ if (e.target === overlay) closeSheet(); });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && overlay.classList.contains("open")) closeSheet();
+  });
+
+  /* ---------- Team verwalten ---------- */
+  var teamOverlay = document.getElementById("team-overlay");
+  var teamRows = document.getElementById("team-rows");
+  var teamNew = document.getElementById("team-new");
+  var avatarFile = document.getElementById("avatar-file");
+  var avatarFor = null;
+
+  function openTeam(){ renderTeamRows(); teamOverlay.classList.add("open"); }
+  function closeTeam(){ teamOverlay.classList.remove("open"); }
+
+  function renderTeamRows(){
+    teamRows.textContent = "";
+    roster.forEach(function(m){
+      var li = document.createElement("li");
+      li.className = "team-row";
+      li.appendChild(avatarEl(m));
+      var nm = document.createElement("span");
+      nm.className = "member-name"; nm.textContent = m;
+      li.appendChild(nm);
+      var has = !!avatarOf(m);
+      var ph = document.createElement("button");
+      ph.type = "button"; ph.className = "mini-btn"; ph.dataset.photo = m;
+      ph.textContent = has ? "Foto ändern" : "Foto wählen";
+      li.appendChild(ph);
+      if (has){
+        var np = document.createElement("button");
+        np.type = "button"; np.className = "mini-btn"; np.dataset.nophoto = m;
+        np.textContent = "Ohne Foto";
+        li.appendChild(np);
+      }
+      var rm = document.createElement("button");
+      rm.type = "button"; rm.className = "mini-btn danger"; rm.dataset.removeMember = m;
+      rm.textContent = "Entfernen";
+      rm.setAttribute("aria-label", m + " aus dem Team entfernen");
+      li.appendChild(rm);
+      teamRows.appendChild(li);
+    });
+  }
+
+  teamRows.addEventListener("click", function(e){
+    var p = e.target.closest("[data-photo]");
+    if (p){ avatarFor = p.dataset.photo; avatarFile.value = ""; avatarFile.click(); return; }
+    var np = e.target.closest("[data-nophoto]");
+    if (np){ avatars[np.dataset.nophoto] = ""; putTeam(); renderTeamRows(); return; }
+    var rm = e.target.closest("[data-remove-member]");
+    if (rm){
+      var m = rm.dataset.removeMember;
+      if (confirm("„" + m + "“ aus dem Team entfernen?\nBereits zugewiesene Karten behalten das Kürzel.")){
+        delete avatars[m];
+        putRoster(roster.filter(function(x){ return x !== m; }));
+        renderTeamRows();
+      }
+    }
+  });
+
+  /* Foto quadratisch zuschneiden und auf 160 px verkleinern: wenige KB statt MB. */
+  avatarFile.addEventListener("change", function(){
+    var f = avatarFile.files && avatarFile.files[0];
+    var who = avatarFor;
+    if (!f || !who) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var S = 160, c = document.createElement("canvas");
+        c.width = S; c.height = S;
+        var w = img.naturalWidth, h = img.naturalHeight, side = Math.min(w, h);
+        var sx = (w - side) / 2;
+        // Hochformat-Porträts: Ausschnitt nach oben, damit das Gesicht mittig sitzt.
+        var sy = h > w ? (h - side) * 0.2 : (h - side) / 2;
+        c.getContext("2d").drawImage(img, sx, sy, side, side, 0, 0, S, S);
+        avatars[who] = c.toDataURL("image/jpeg", 0.82);
+        putTeam();
+        renderTeamRows();
+      };
+      img.onerror = function(){ alert("Dieses Bild konnte nicht gelesen werden. Bitte ein JPG- oder PNG-Foto wählen."); };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(f);
+  });
+
+  function addMember(){
+    var v = teamNew.value.trim().toUpperCase().replace(/[^A-ZÄÖÜ0-9]/g, "").slice(0, 6);
+    if (!v){ teamNew.focus(); return; }
+    if (roster.indexOf(v) < 0) putRoster(roster.concat([v]));
+    teamNew.value = "";
+    renderTeamRows();
+    teamNew.focus();
+  }
+  document.getElementById("team-add-btn").addEventListener("click", addMember);
+  teamNew.addEventListener("keydown", function(e){
+    if (e.key === "Enter" && !e.isComposing){ e.preventDefault(); addMember(); }
+  });
+  document.getElementById("team-close").addEventListener("click", closeTeam);
+  teamOverlay.addEventListener("mousedown", function(e){ if (e.target === teamOverlay) closeTeam(); });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && teamOverlay.classList.contains("open")) closeTeam();
+  });
+  teambar.addEventListener("click", function(e){
+    if (Date.now() < suppressUntil) return;
+    if (e.target.closest("[data-team-edit]")) openTeam();
+  });
+
+  /* ---------- Stand austauschen (ohne gemeinsame Ablage) ---------- */
+  var syncOverlay = document.getElementById("sync-overlay");
+  var syncOut = document.getElementById("sync-out");
+  var syncIn = document.getElementById("sync-in");
+  var syncInfo = document.getElementById("sync-info");
+  var syncCopy = document.getElementById("sync-copy");
+
+  function encodePayload(obj){
+    var bytes = new TextEncoder().encode(JSON.stringify(obj));
+    var bin = "";
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  }
+  function decodePayload(str){
+    var b = String(str).trim().replace(/\s+/g,"").replace(/-/g,"+").replace(/_/g,"/");
+    while (b.length % 4) b += "=";
+    var bin = atob(b);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+  function buildPayload(){
+    var o = {};
+    cards.forEach(function(v,k){ o[k] = v; });
+    return {v:1, at:new Date().toISOString(), team:roster.slice(), cards:o};
+  }
+  function stamp(iso){
+    var d = new Date(iso);
+    if (isNaN(d)) return "unbekanntes Datum";
+    return d.toLocaleDateString("de-DE", {day:"2-digit", month:"2-digit", year:"numeric"})
+      + ", " + d.toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit"}) + " Uhr";
+  }
+
+  function openSync(){
+    var payload = buildPayload();
+    var code = encodePayload(payload);
+    syncOut.value = code;
+    syncIn.value = "";
+    var n = cards.size;
+    syncInfo.textContent = "Stand vom " + stamp(payload.at) + " · "
+      + (n === 1 ? "1 Karte" : n + " Karten")
+      + ". Code kopieren und der Kollegin schicken – sie fügt ihn unter „Übernehmen“ ein.";
+    syncCopy.textContent = "Kopieren";
+    document.querySelector("#sync-overlay .sheet-sub").textContent = mode === "cloud"
+      ? "Das Board gleicht sich automatisch ab. Dieser Code dient als Sicherung, die du ablegen oder später wieder einspielen kannst."
+      : "Dieses Board liegt auf jedem Gerät für sich. Mit diesen beiden Schritten gebt ihr den aktuellen Stand weiter.";
+    syncOverlay.classList.add("open");
+    setTimeout(function(){ syncOut.focus(); syncOut.select(); }, 30);
+  }
+  function closeSync(){ syncOverlay.classList.remove("open"); }
+
+  document.getElementById("btn-sync").addEventListener("click", openSync);
+  document.getElementById("sync-close").addEventListener("click", closeSync);
+  syncOverlay.addEventListener("mousedown", function(e){ if (e.target === syncOverlay) closeSync(); });
+
+  syncCopy.addEventListener("click", function(){
+    var ok = function(){
+      syncCopy.textContent = "Kopiert ✓";
+      setTimeout(function(){ syncCopy.textContent = "Kopieren"; }, 1800);
+    };
+    var manual = function(){
+      syncOut.focus(); syncOut.select();
+      try{ if (document.execCommand("copy")) return ok(); }catch(e){}
+      syncCopy.textContent = "Bitte von Hand kopieren";
+      setTimeout(function(){ syncCopy.textContent = "Kopieren"; }, 2600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(syncOut.value).then(ok, manual);
+    } else manual();
+  });
+
+  document.getElementById("sync-apply").addEventListener("click", function(){
+    var raw = syncIn.value.trim();
+    if (!raw){ syncIn.focus(); return; }
+    var p;
+    try{ p = decodePayload(raw); }
+    catch(e){ alert("Der Code konnte nicht gelesen werden. Bitte vollständig und unverändert einfügen."); return; }
+    if (!p || typeof p !== "object" || !p.cards){
+      alert("Der Code enthält keinen Board-Stand.");
+      return;
+    }
+    var keys = Object.keys(p.cards);
+    var msg = "Stand vom " + stamp(p.at) + " mit "
+      + (keys.length === 1 ? "1 Karte" : keys.length + " Karten") + " übernehmen?\n\n"
+      + "Das Board auf diesem Gerät wird dabei vollständig ersetzt.";
+    if (!confirm(msg)) return;
+
+    var next = new Map();
+    keys.forEach(function(k){
+      var d = p.cards[k];
+      if (d && COL_IDS.indexOf(d.column) >= 0) next.set(k, d);
+    });
+    cards = next;
+    if (Array.isArray(p.team) && p.team.length) roster = p.team.slice();
+    render();
+    if (mode === "cloud"){
+      pushWholeBoard().catch(reportWriteError);
+    } else {
+      saveLocalCards(); saveLocalTeam();
+    }
+    closeSync();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && syncOverlay.classList.contains("open")) closeSync();
+  });
+
+  /* ---------- Start ---------- */
+  function seedCards(){
+    var t = new Date();
+    function inDays(n){
+      var d = new Date(t.getFullYear(), t.getMonth(), t.getDate() + n);
+      return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+    }
+    function ago(days, h, m){
+      return new Date(t.getFullYear(), t.getMonth(), t.getDate() - days, h, m).toISOString();
+    }
+    return [
+      {column:"flow", order:1000, title:"Ablauf: Neues iPad in die Verwaltung aufnehmen", members:["RUB"], due:"", sample:true,
+       notes:[{id:"n1", text:"1. Seriennummer erfassen  2. Im MDM zuweisen  3. Hülle und Etikett anbringen", at:ago(12, 10, 0)}]},
+      {column:"flow", order:2000, title:"Ablauf: Schaden an einem Schul-iPad melden", members:["KRS"], due:"", sample:true, notes:[]},
+      {column:"todo", order:1000, title:"MDM-Zertifikat verlängern", members:["RUB"], due:inDays(5), important:true, sample:true,
+       notes:[{id:"n2", text:"Läuft es ab, verlieren alle Geräte die Verwaltung.", at:ago(1, 8, 30)}]},
+      {column:"todo", order:2000, title:"Fortbildung „Keynote im Unterricht“ für das Kollegium planen", members:["CRY", "KRG"], due:inDays(14), sample:true, notes:[]},
+      {column:"doing", order:1000, title:"Ladekoffer: defekte Kabel austauschen", members:["GER"], due:inDays(3), sample:true,
+       notes:[{id:"n3", text:"Ersatzkabel bestellt, Lieferung am Donnerstag.", at:ago(2, 14, 10)}]},
+      {column:"doing", order:2000, title:"App-Wunschliste für das 2. Halbjahr sammeln", members:["SCD", "LUB"], due:inDays(20), sample:true, notes:[]},
+      {column:"done", order:1000, title:"Klassensätze an die Jahrgangsstufe 11 ausgegeben", members:["SCD"], due:"", sample:true,
+       notes:[{id:"n4", text:"Ausgabeliste liegt im Ordner der iPad-Gruppe.", at:ago(6, 12, 45)}]},
+      {column:"hold", order:1000, title:"WLAN-Ausleuchtung im Altbau", members:["LUB"], due:"", sample:true,
+       notes:[{id:"n5", text:"Wartet auf einen Termin des Schulträgers.", at:ago(4, 9, 15)}]},
+      {column:"archive", order:1000, title:"iPad-Sprechstunde im September", members:["KRG"], due:"", sample:true, notes:[]}
+    ];
+  }
+
+  function startLocal(reason){
+    mode = "local";
+    setStatus("local", "Lokal auf diesem Gerät");
+    statusEl.title = reason || "Dieses Board wird im Browser dieses Geräts gespeichert. Über „Stand austauschen“ gebt ihr den Stand weiter.";
+    try{
+      var rawT = localStorage.getItem(LS_TEAM);
+      if (rawT){ var r = JSON.parse(rawT); if (Array.isArray(r)) roster = r; }
+      var rawA = localStorage.getItem(LS_AVATARS);
+      if (rawA){ var ra = JSON.parse(rawA); if (ra && typeof ra === "object") avatars = ra; }
+    }catch(e){}
+    var raw = null;
+    try{ raw = localStorage.getItem(LS_CARDS); }catch(e){}
+    if (raw){
+      try{
+        var o = JSON.parse(raw);
+        Object.keys(o).forEach(function(k){ cards.set(k, o[k]); });
+      }catch(e){}
+    }
+    if (!cards.size){
+      seedCards().forEach(function(c){ cards.set(newId(), c); });
+      saveLocalCards();
+    }
+    render();
+  }
+
+  render();
+
+  if (FIREBASE_DB_URL && FIREBASE_API_KEY){
+    bootAuth();
+  } else if (FIREBASE_DB_URL){
+    startCloud();
+  } else {
+    startLocal();
+  }
+})();
+</script>
+
+</body>
+</html>
