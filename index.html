@@ -529,6 +529,26 @@ body.dragging .card:not(.ghost){transition:none}
 .login-actions{display:flex; gap:10px; flex-wrap:wrap}
 .login-actions .btn{flex:1 1 140px}
 
+/* ---------- Spaltenbreite ändern ---------- */
+.col{position:relative}
+.col-resize{
+  position:absolute; top:0; bottom:0; right:-14px; width:16px; z-index:4;
+  display:flex; align-items:center; justify-content:center;
+  cursor:col-resize; touch-action:none;
+  -webkit-touch-callout:none; user-select:none; -webkit-user-select:none;
+}
+.col-resize::before{
+  content:""; width:4px; height:44px; border-radius:2px;
+  background:var(--line-2); opacity:.75;
+  transition:background .12s, opacity .12s, height .12s;
+}
+.col-resize:hover::before, .col-resize.active::before, .col-resize:focus-visible::before{
+  background:var(--acc); opacity:1; height:76px;
+}
+.col-resize:focus-visible{outline:none}
+.col.collapsed .col-resize{display:none}
+body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !important; -webkit-user-select:none !important}
+
 /* ---------- Ränder für iPad und iPhone (Notch, Home-Leiste) ---------- */
 .topbar{
   padding-top:max(13px, env(safe-area-inset-top));
@@ -580,6 +600,7 @@ body.dragging .card:not(.ghost){transition:none}
   .col{flex:0 0 88%; min-width:0}
   .col-arch-toggle{display:none}
   .card-title{font-size:15.5px}
+  .col-resize{display:none}
 }
 @media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
 </style>
@@ -1602,8 +1623,31 @@ body.dragging .card:not(.ghost){transition:none}
     if (open) setTimeout(function(){ scrollToCol("archive"); }, 30);
   }
 
+  /* ---------- Spaltenbreiten: pro Gerät gemerkt, iPad und Handy bleiben unabhängig ---------- */
+  var LS_WIDTHS = "board-ipadgruppe-spaltenbreiten-v1";
+  var MIN_W = 170, MAX_W = 900;
+  var colWidths = {};
+  try{ colWidths = JSON.parse(localStorage.getItem(LS_WIDTHS) || "{}") || {}; }catch(e){ colWidths = {}; }
+  function saveWidths(){ try{ localStorage.setItem(LS_WIDTHS, JSON.stringify(colWidths)); }catch(e){} }
+  function clampW(w){ return Math.max(MIN_W, Math.min(MAX_W, Math.round(w))); }
+  function applyWidth(colEl, w){
+    colEl.style.flex = "0 0 " + w + "px";
+    colEl.style.width = w + "px";
+    colEl.style.minWidth = w + "px";
+  }
+  function focusHandle(id){
+    var h = board.querySelector('.col-resize[data-resize="' + id + '"]');
+    if (h) h.focus();
+  }
+  function resetWidth(id){
+    delete colWidths[id];
+    saveWidths();
+    render();
+  }
+  var rz = null, lastTap = {id: null, t: 0};
+
   function render(){
-    if (drag) return;
+    if (drag || rz) return;
     var active = document.activeElement;
     var draft = null;
     if (active && active.classList && active.classList.contains("note-input")){
@@ -1673,6 +1717,16 @@ body.dragging .card:not(.ghost){transition:none}
       foot.appendChild(add);
       wrap.appendChild(foot);
 
+      if (!wrap.classList.contains("collapsed")){
+        if (colWidths[col.id] && mqWide.matches) applyWidth(wrap, colWidths[col.id]);
+        var rh = document.createElement("div");
+        rh.className = "col-resize"; rh.dataset.resize = col.id; rh.tabIndex = 0;
+        rh.setAttribute("role", "separator");
+        rh.setAttribute("aria-orientation", "vertical");
+        rh.setAttribute("aria-label", "Breite der Spalte „" + col.label + "“ ändern (Pfeiltasten, Pos1 setzt zurück)");
+        rh.title = "Ziehen: Breite ändern · Doppelt tippen: zurücksetzen";
+        wrap.appendChild(rh);
+      }
       board.appendChild(wrap);
     });
 
@@ -1699,6 +1753,26 @@ body.dragging .card:not(.ghost){transition:none}
   document.addEventListener("pointerdown", function(e){
     if ((e.button != null && e.button !== 0) || drag) return;
     if (!e.target.closest) return;
+
+    var rh = e.target.closest(".col-resize");
+    if (rh){
+      e.preventDefault();
+      var now = Date.now();
+      // Zweimal kurz tippen oder klicken: zurück zur automatischen Breite
+      if (lastTap.id === rh.dataset.resize && now - lastTap.t < 350){
+        lastTap = {id: null, t: 0};
+        resetWidth(rh.dataset.resize);
+        return;
+      }
+      lastTap = {id: rh.dataset.resize, t: now};
+      var colEl = rh.parentNode;
+      rz = {id: rh.dataset.resize, col: colEl, handle: rh, pointerId: e.pointerId,
+            startX: e.clientX, startW: colEl.getBoundingClientRect().width, w: null};
+      try{ rh.setPointerCapture(e.pointerId); }catch(err){}
+      rh.classList.add("active");
+      document.body.classList.add("resizing");
+      return;
+    }
 
     var mem = e.target.closest(".member");
     if (mem && !e.target.closest(".member-remove")){
@@ -1730,6 +1804,29 @@ body.dragging .card:not(.ghost){transition:none}
     if (drag.kind === "card") moveCardDrag(e); else moveMemberDrag(e);
     e.preventDefault();
   }, {passive:false});
+
+  window.addEventListener("pointermove", function(e){
+    if (!rz || e.pointerId !== rz.pointerId) return;
+    var w = clampW(rz.startW + (e.clientX - rz.startX));
+    if (w !== rz.w){ rz.w = w; applyWidth(rz.col, w); }
+    e.preventDefault();
+  }, {passive: false});
+  function endResize(e){
+    if (!rz || e.pointerId !== rz.pointerId) return;
+    var done = rz;
+    rz = null;
+    done.handle.classList.remove("active");
+    document.body.classList.remove("resizing");
+    if (done.w != null){
+      colWidths[done.id] = done.w;
+      saveWidths();
+      lastTap = {id: null, t: 0};
+      suppressUntil = Date.now() + 400;
+    }
+    render();
+  }
+  window.addEventListener("pointerup", endResize);
+  window.addEventListener("pointercancel", endResize);
 
   window.addEventListener("pointerup", endPointer);
   window.addEventListener("pointercancel", endPointer);
@@ -1971,6 +2068,20 @@ body.dragging .card:not(.ghost){transition:none}
 
     var card = e.target.closest(".card");
     if (card) openSheet(card.dataset.id, null);
+  });
+
+  board.addEventListener("keydown", function(e){
+    if (!e.target.classList || !e.target.classList.contains("col-resize")) return;
+    var id = e.target.dataset.resize;
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight"){
+      e.preventDefault();
+      var cur = colWidths[id] || e.target.parentNode.getBoundingClientRect().width;
+      colWidths[id] = clampW(cur + (e.key === "ArrowRight" ? 20 : -20));
+      saveWidths(); render(); focusHandle(id);
+    } else if (e.key === "Home" || e.key === "Delete" || e.key === "Backspace"){
+      e.preventDefault();
+      resetWidth(id); focusHandle(id);
+    }
   });
 
   board.addEventListener("keydown", function(e){
