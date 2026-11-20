@@ -768,14 +768,18 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
   var SAFETY_POLL_MS = 30000;  // Rückfallabgleich, falls der Livestrom aussetzt
 
   var COLUMNS = [
-    {id:"flow",    label:"Workflow",              acc:"var(--c-news)",  soft:"var(--c-news-soft)"},
     {id:"todo",    label:"Zu erledigen",          acc:"var(--c-todo)",  soft:"var(--c-todo-soft)"},
-    {id:"doing",   label:"In Bearbeitung",        acc:"var(--c-doing)", soft:"var(--c-doing-soft)"},
     {id:"done",    label:"Erledigt",              acc:"var(--c-done)",  soft:"var(--c-done-soft)"},
-    {id:"hold",    label:"Momentan nicht lösbar", acc:"var(--c-hold)",  soft:"var(--c-hold-soft)"},
     {id:"archive", label:"Archiv",                acc:"var(--c-arch)",  soft:"var(--c-arch-soft)"}
   ];
   var COL_IDS = COLUMNS.map(function(c){return c.id;});
+  /* Entfernte Spalten: Karten daraus zeigt das Board unter „Zu erledigen“.
+     Gespeichert wird die neue Spalte erst, wenn jemand die Karte bewegt oder bearbeitet. */
+  var FORMER_COLS = {flow: "todo", doing: "todo", hold: "todo", news: "todo"};
+  function normCol(c){
+    if (COL_IDS.indexOf(c) >= 0) return c;
+    return FORMER_COLS[c] || null;
+  }
   var DEFAULT_ROSTER = ["RUB", "KRS", "CRY", "KRG", "SCD", "GER", "LUB"];
   var LS_CARDS = "board-ipadgruppe-karten-v1";
   var LS_TEAM = "board-ipadgruppe-team-v1";
@@ -957,7 +961,10 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     var next = new Map();
     Object.keys(raw).forEach(function(id){
       var r = raw[id];
-      if (r && typeof r === "object" && COL_IDS.indexOf(r.col) >= 0) next.set(id, rowToCard(r));
+      if (!r || typeof r !== "object") return;
+      var card = rowToCard(r);
+      card.column = normCol(card.column);
+      if (card.column) next.set(id, card);
     });
     cards = next;
     var t = fbState && fbState.team ? fbState.team.members : null;
@@ -2261,7 +2268,7 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     editingId = id;
     var d = id ? cards.get(id) : null;
     editingCol = d ? d.column : (colId || "todo");
-    var col = COLUMNS.filter(function(c){ return c.id === editingCol; })[0] || COLUMNS[1];
+    var col = COLUMNS.filter(function(c){ return c.id === editingCol; })[0] || COLUMNS[0];
 
     document.getElementById("sheet-title").textContent = id ? "Karte bearbeiten" : "Neue Karte";
     document.getElementById("sheet-sub").textContent = "Spalte „" + col.label + "“";
@@ -2511,7 +2518,7 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     var next = new Map();
     keys.forEach(function(k){
       var d = p.cards[k];
-      if (d && COL_IDS.indexOf(d.column) >= 0) next.set(k, d);
+      if (d && normCol(d.column)){ d.column = normCol(d.column); next.set(k, d); }
     });
     cards = next;
     if (Array.isArray(p.team) && p.team.length) roster = p.team.slice();
@@ -2539,18 +2546,18 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
       return new Date(t.getFullYear(), t.getMonth(), t.getDate() - days, h, m).toISOString();
     }
     return [
-      {column:"flow", order:1000, title:"Ablauf: Neues iPad in die Verwaltung aufnehmen", members:["RUB"], due:"", sample:true,
+      {column:"todo", order:3000, title:"Ablauf: Neues iPad in die Verwaltung aufnehmen", members:["RUB"], due:"", sample:true,
        notes:[{id:"n1", text:"1. Seriennummer erfassen  2. Im MDM zuweisen  3. Hülle und Etikett anbringen", at:ago(12, 10, 0)}]},
-      {column:"flow", order:2000, title:"Ablauf: Schaden an einem Schul-iPad melden", members:["KRS"], due:"", sample:true, notes:[]},
+      {column:"todo", order:4000, title:"Ablauf: Schaden an einem Schul-iPad melden", members:["KRS"], due:"", sample:true, notes:[]},
       {column:"todo", order:1000, title:"MDM-Zertifikat verlängern", members:["RUB"], due:inDays(5), important:true, sample:true,
        notes:[{id:"n2", text:"Läuft es ab, verlieren alle Geräte die Verwaltung.", at:ago(1, 8, 30)}]},
       {column:"todo", order:2000, title:"Fortbildung „Keynote im Unterricht“ für das Kollegium planen", members:["CRY", "KRG"], due:inDays(14), sample:true, notes:[]},
-      {column:"doing", order:1000, title:"Ladekoffer: defekte Kabel austauschen", members:["GER"], due:inDays(3), sample:true,
+      {column:"todo", order:5000, title:"Ladekoffer: defekte Kabel austauschen", members:["GER"], due:inDays(3), sample:true,
        notes:[{id:"n3", text:"Ersatzkabel bestellt, Lieferung am Donnerstag.", at:ago(2, 14, 10)}]},
-      {column:"doing", order:2000, title:"App-Wunschliste für das 2. Halbjahr sammeln", members:["SCD", "LUB"], due:inDays(20), sample:true, notes:[]},
+      {column:"todo", order:6000, title:"App-Wunschliste für das 2. Halbjahr sammeln", members:["SCD", "LUB"], due:inDays(20), sample:true, notes:[]},
       {column:"done", order:1000, title:"Klassensätze an die Jahrgangsstufe 11 ausgegeben", members:["SCD"], due:"", sample:true,
        notes:[{id:"n4", text:"Ausgabeliste liegt im Ordner der iPad-Gruppe.", at:ago(6, 12, 45)}]},
-      {column:"hold", order:1000, title:"WLAN-Ausleuchtung im Altbau", members:["LUB"], due:"", sample:true,
+      {column:"archive", order:2000, title:"WLAN-Ausleuchtung im Altbau", members:["LUB"], due:"", sample:true,
        notes:[{id:"n5", text:"Wartet auf einen Termin des Schulträgers.", at:ago(4, 9, 15)}]},
       {column:"archive", order:1000, title:"iPad-Sprechstunde im September", members:["KRG"], due:"", sample:true, notes:[]}
     ];
@@ -2571,7 +2578,10 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     if (raw){
       try{
         var o = JSON.parse(raw);
-        Object.keys(o).forEach(function(k){ cards.set(k, o[k]); });
+        Object.keys(o).forEach(function(k){
+          var c = o[k];
+          if (c && normCol(c.column)){ c.column = normCol(c.column); cards.set(k, c); }
+        });
       }catch(e){}
     }
     if (!cards.size){
