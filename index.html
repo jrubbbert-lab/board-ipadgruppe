@@ -330,6 +330,8 @@ button, .card, .member, .coltab{-webkit-tap-highlight-color:transparent}
 .card-meta{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:2px}
 .col-body > *{flex-shrink:0}
 .card-title, .note-text{overflow-wrap:break-word; -webkit-hyphens:auto; hyphens:auto}
+.card-title{white-space:pre-line}
+.field textarea#f-title{min-height:44px; resize:none; overflow:hidden; line-height:1.4}
 .card-meta .flag{margin:0 -6px 0 auto; width:34px; height:34px; align-self:center}
 .tag.has-av{padding-left:2px}
 .tag-av{width:18px; height:18px; border-radius:50%; object-fit:cover; margin-right:5px; display:block}
@@ -672,7 +674,8 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     <p class="sheet-sub" id="sheet-sub">Spalte &bdquo;Zu erledigen&ldquo;</p>
     <div class="field">
       <label for="f-title">Titel</label>
-      <input id="f-title" name="title" maxlength="120" required autocomplete="off" placeholder="Worum geht es?">
+      <textarea id="f-title" name="title" maxlength="200" rows="1" required autocomplete="off" placeholder="Worum geht es?" enterkeyhint="done"></textarea>
+      <p class="note-hint" style="display:block">Enter speichert &middot; Umschalt + Enter macht eine neue Zeile</p>
     </div>
     <div class="field">
       <label>Zust&auml;ndig</label>
@@ -1458,7 +1461,7 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     body.appendChild(add);
     var hint = document.createElement("p");
     hint.className = "note-hint";
-    hint.textContent = "Liste: Zeile mit „1.“ oder „-“ beginnen. Enter führt sie fort, Enter im leeren Punkt beendet sie. Enter außerhalb einer Liste speichert.";
+    hint.textContent = "Enter speichert · Umschalt + Enter macht eine neue Zeile · Eine Zeile mit „1.“ oder „-“ startet eine Liste, Enter setzt sie fort.";
     body.appendChild(hint);
     wrap.appendChild(body);
     return wrap;
@@ -2177,8 +2180,12 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
   board.addEventListener("keydown", function(e){
     if (e.target.classList && e.target.classList.contains("note-input")){
       if (e.key !== "Enter" || e.isComposing) return;
-      if (e.shiftKey) return;                       // Umschalt+Enter: normaler Zeilenumbruch
       e.preventDefault();
+      if (e.shiftKey){                              // Umschalt+Enter: neue Zeile
+        e.target.setRangeText("\n", e.target.selectionStart, e.target.selectionEnd, "end");
+        autosize(e.target);
+        return;
+      }
       if (continueList(e.target)) return;           // in einer Liste: nächster Punkt
       addNote(e.target.dataset.card);               // sonst: speichern
       return;
@@ -2191,6 +2198,19 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
   });
 
   var fTitle = document.getElementById("f-title");
+  fTitle.addEventListener("keydown", function(e){
+    if (e.key !== "Enter" || e.isComposing) return;
+    if (e.shiftKey){
+      e.preventDefault();
+      fTitle.setRangeText("\n", fTitle.selectionStart, fTitle.selectionEnd, "end");
+      autosize(fTitle);
+      return;
+    }
+    e.preventDefault();
+    if (sheet.requestSubmit) sheet.requestSubmit();
+    else sheet.querySelector('button[type="submit"]').click();
+  });
+  fTitle.addEventListener("input", function(){ autosize(fTitle); });
   var fDue = document.getElementById("f-due");
   var fCol = document.getElementById("f-col");
   var fMembers = document.getElementById("f-members");
@@ -2256,7 +2276,7 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
 
     lastFocus = document.activeElement;
     overlay.classList.add("open");
-    setTimeout(function(){ fTitle.focus(); }, 30);
+    setTimeout(function(){ autosize(fTitle); fTitle.focus(); }, 30);
   }
   function closeSheet(){
     overlay.classList.remove("open");
