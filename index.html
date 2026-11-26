@@ -1408,7 +1408,7 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     if (isNew(d)){
       var nb = document.createElement("span");
       nb.className = "chip new-badge"; nb.textContent = "NEU";
-      nb.title = "Neu seit deinem letzten Blick auf den Böller";
+      nb.title = "Auf einem anderen Gerät angelegt, seit du zuletzt auf den Böller geschaut hast";
       meta.appendChild(nb);
     }
     if (d.important){
@@ -2416,9 +2416,10 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     if (e.key === "Escape" && overlay.classList.contains("open")) closeSheet();
   });
 
-  /* ---------- Böller: neue Karten der anderen ----------
-     „Neu“ heißt: von jemand anderem angelegt, nachdem man zuletzt auf den
-     Böller geschaut hat. Der Zeitpunkt wird pro Gerät gemerkt. */
+  /* ---------- Böller: neue Karten von anderen Geräten ----------
+     „Neu“ heißt: auf einem anderen Gerät angelegt, nachdem man hier zuletzt
+     auf den Böller geschaut hat. Das Board unterscheidet Geräte statt Konten,
+     weil sich das Team ein gemeinsames Konto teilen kann. */
   var LS_SEEN = "board-ipadgruppe-gesehen-v1";
   var seenAt = "";
   try{ seenAt = localStorage.getItem(LS_SEEN) || ""; }catch(e){}
@@ -2426,7 +2427,14 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     seenAt = new Date().toISOString();       // erster Besuch: nichts als neu zählen
     try{ localStorage.setItem(LS_SEEN, seenAt); }catch(e){}
   }
-  function myId(){ return (auth && auth.uid) || "lokal"; }
+  var LS_DEVICE = "board-ipadgruppe-geraet-v1";
+  var deviceId = "";
+  try{ deviceId = localStorage.getItem(LS_DEVICE) || ""; }catch(e){}
+  if (!deviceId){
+    deviceId = "g" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    try{ localStorage.setItem(LS_DEVICE, deviceId); }catch(e){}
+  }
+  function myId(){ return deviceId; }
   function isNew(d){ return !!(d && d.createdAt && d.createdAt > seenAt && d.createdBy !== myId()); }
   function newCards(){
     var out = [];
@@ -2483,7 +2491,7 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     if (!list.length){
       var p = document.createElement("p");
       p.className = "bell-empty";
-      p.textContent = "Sobald jemand aus dem Team eine Karte anlegt, erscheint sie hier und der Böller zeigt eine goldene Zahl.";
+      p.textContent = "Sobald auf einem anderen Gerät eine Karte angelegt wird, erscheint sie hier und der Böller zeigt eine goldene Zahl.";
       bellPanel.appendChild(p);
     } else {
       var ul = document.createElement("ul");
