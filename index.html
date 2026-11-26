@@ -541,6 +541,55 @@ body.dragging .card:not(.ghost){transition:none}
 .login-actions{display:flex; gap:10px; flex-wrap:wrap}
 .login-actions .btn{flex:1 1 140px}
 
+/* ---------- Böller: neue Karten ---------- */
+.bell-wrap{position:relative; flex:0 0 auto}
+.bell{
+  position:relative; width:46px; height:40px; border-radius:10px; cursor:pointer;
+  border:1px solid rgba(204,228,216,.45); background:rgba(255,255,255,.10);
+  display:flex; align-items:center; justify-content:center; font-size:22px; line-height:1;
+}
+.bell:hover{background:rgba(255,255,255,.2)}
+.bell:focus-visible{outline:2px solid #CCE4D8; outline-offset:2px}
+.bell-icon{display:inline-block}
+.bell-count{
+  position:absolute; top:-8px; right:-9px; min-width:23px; height:23px; padding:0 6px;
+  display:flex; align-items:center; justify-content:center; border-radius:999px;
+  background:linear-gradient(180deg, #F8DC7A 0%, #E6B52A 55%, #C7930C 100%);
+  color:#3A2600; font-size:12.5px; font-weight:700; font-variant-numeric:tabular-nums;
+  box-shadow:0 0 0 2px #2A473B, 0 2px 6px rgba(0,0,0,.35);
+}
+.bell.boom .bell-icon{animation:boom .8s ease-out}
+@keyframes boom{
+  0%{transform:rotate(0) scale(1)} 20%{transform:rotate(-18deg) scale(1.18)}
+  40%{transform:rotate(14deg) scale(1.15)} 60%{transform:rotate(-8deg) scale(1.05)}
+  80%{transform:rotate(4deg)} 100%{transform:rotate(0) scale(1)}
+}
+.bell-panel{
+  position:absolute; right:0; top:calc(100% + 9px); z-index:70;
+  width:min(340px, calc(100vw - 24px)); max-height:min(62vh, 470px); overflow:auto;
+  background:var(--surface); color:var(--ink); border:1px solid var(--line);
+  border-top:4px solid #E6B52A; border-radius:12px; box-shadow:var(--lift); padding:12px;
+}
+.bell-panel h3{margin:0 0 9px; font-size:15px; font-weight:700}
+.bell-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px}
+.bell-item{
+  width:100%; text-align:left; display:flex; flex-direction:column; gap:3px; padding:9px 11px;
+  border-radius:8px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink); cursor:pointer; font:inherit;
+}
+.bell-item:hover, .bell-item:focus-visible{border-color:#E6B52A; outline:none}
+.bell-item .bt{font-size:14px; font-weight:700; line-height:1.3; overflow:hidden;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical}
+.bell-item .bm{font-size:12px; color:var(--muted)}
+.bell-empty{margin:0; font-size:13.5px; line-height:1.45; color:var(--muted)}
+.bell-foot{margin:10px 0 0; font-size:12px; color:var(--muted)}
+.chip.new-badge{background:#E6B52A; color:#3A2600; border-color:transparent; font-weight:700; letter-spacing:.06em}
+.card.flash{animation:flash 1.8s ease-out}
+@keyframes flash{0%, 35%{box-shadow:0 0 0 4px #E6B52A, var(--shadow)} 100%{box-shadow:var(--shadow)}}
+
+/* ---------- Design-Umschalter ---------- */
+.theme-btn{display:inline-flex; align-items:center; gap:7px}
+.theme-btn .ti{font-size:15px; line-height:1}
+
 /* ---------- Spaltenbreite ändern ---------- */
 .col{position:relative}
 .col-resize{
@@ -613,10 +662,22 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
   .col-arch-toggle{display:none}
   .card-title{font-size:15.5px}
   .col-resize{display:none}
+  .theme-btn .tl{display:none}
+  .bell{width:42px; height:36px; font-size:20px}
 }
 @media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
 </style>
 
+<script>
+  /* Gewähltes Design sofort setzen, damit die Seite nicht kurz hell aufblitzt */
+  try{
+    var __t = localStorage.getItem("board-ipadgruppe-design-v1");
+    if (__t === "dark" || __t === "light"){
+      document.documentElement.setAttribute("data-theme", __t);
+      document.documentElement.style.colorScheme = __t;
+    }
+  }catch(e){}
+</script>
 <header class="topbar">
   <div>
     <h1>iPad-Gruppe &ndash; Kanban-Board</h1>
@@ -625,8 +686,16 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
   <div class="topbar-right">
     <span class="hint">Karte am Griff ziehen &middot; K&uuml;rzel auf eine Karte ziehen &middot; <b>!</b> markiert als wichtig</span>
     <button type="button" class="topbtn" id="btn-sync">Stand austauschen</button>
+    <button type="button" class="topbtn theme-btn" id="btn-theme"><span class="ti" aria-hidden="true">&#9680;</span><span class="tl">Automatisch</span></button>
     <button type="button" class="topbtn" id="btn-logout" hidden>Abmelden</button>
     <span class="status" id="status"><span class="dot"></span><span id="status-text">verbinde&hellip;</span></span>
+    <div class="bell-wrap">
+      <button type="button" class="bell" id="btn-bell" aria-haspopup="dialog" aria-expanded="false" aria-controls="bell-panel" aria-label="Keine neuen Karten">
+        <span class="bell-icon" aria-hidden="true">&#129512;</span>
+        <span class="bell-count" id="bell-count" hidden>0</span>
+      </button>
+      <div class="bell-panel" id="bell-panel" role="dialog" aria-label="Neue Karten" hidden></div>
+    </div>
   </div>
 </header>
 
@@ -908,7 +977,9 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
       important: !!d.important,
       members: membersOf(d),
       due: d.due || "",
-      sample: !!d.sample
+      sample: !!d.sample,
+      createdAt: d.createdAt || "",
+      createdBy: d.createdBy || ""
     };
   }
   function rowToCard(r){
@@ -920,7 +991,9 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
       important: !!r.important,
       members: Array.isArray(r.members) ? r.members : [],
       due: r.due || "",
-      sample: !!r.sample
+      sample: !!r.sample,
+      createdAt: r.createdAt || "",
+      createdBy: r.createdBy || ""
     };
   }
 
@@ -1332,6 +1405,12 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
 
     var meta = document.createElement("div");
     meta.className = "card-meta";
+    if (isNew(d)){
+      var nb = document.createElement("span");
+      nb.className = "chip new-badge"; nb.textContent = "NEU";
+      nb.title = "Neu seit deinem letzten Blick auf den Böller";
+      meta.appendChild(nb);
+    }
     if (d.important){
       var ib = document.createElement("span");
       ib.className = "chip imp-badge"; ib.textContent = "WICHTIG";
@@ -1823,6 +1902,7 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     });
     renderTeamBar();
     renderTabs();
+    renderBell();
     updateCurrentCol();
     if (draft){
       var inp = board.querySelector('.card[data-id="' + draft.card + '"] .note-input');
@@ -2298,18 +2378,29 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
     var col = fCol.value;
     var base = editingId ? cards.get(editingId) : null;
     var order;
+    var list = cardList(col);
     if (base && base.column === col && typeof base.order === "number") order = base.order;
-    else {
-      var list = cardList(col);
+    else if (!base){
+      // Neue Karte: immer ganz oben in der Spalte
+      var first = list.length ? list[0].d.order : 1000;
+      order = (typeof first === "number" ? first : 1000) - 1000;
+    } else {
       var last = list.length ? list[list.length-1].d.order : 0;
       order = (typeof last === "number" ? last : 0) + 1000;
     }
+    var nowIso = new Date().toISOString();
     putCard(editingId || newId(), {
       title:title, notes: base ? notesOf(base) : [], members:editMembers.slice(),
       important: fImp.getAttribute("aria-pressed") === "true",
       due:fDue.value || "", column:col, order:order,
-      updatedAt:new Date().toISOString()
+      createdAt: base ? (base.createdAt || "") : nowIso,
+      createdBy: base ? (base.createdBy || "") : myId(),
+      updatedAt: nowIso
     });
+    if (!base){
+      var colBody = board.querySelector('.col-body[data-col="' + col + '"]');
+      if (colBody) colBody.scrollTop = 0;
+    }
     closeSheet();
   });
 
@@ -2324,6 +2415,170 @@ body.resizing, body.resizing *{cursor:col-resize !important; user-select:none !i
   document.addEventListener("keydown", function(e){
     if (e.key === "Escape" && overlay.classList.contains("open")) closeSheet();
   });
+
+  /* ---------- Böller: neue Karten der anderen ----------
+     „Neu“ heißt: von jemand anderem angelegt, nachdem man zuletzt auf den
+     Böller geschaut hat. Der Zeitpunkt wird pro Gerät gemerkt. */
+  var LS_SEEN = "board-ipadgruppe-gesehen-v1";
+  var seenAt = "";
+  try{ seenAt = localStorage.getItem(LS_SEEN) || ""; }catch(e){}
+  if (!seenAt){
+    seenAt = new Date().toISOString();       // erster Besuch: nichts als neu zählen
+    try{ localStorage.setItem(LS_SEEN, seenAt); }catch(e){}
+  }
+  function myId(){ return (auth && auth.uid) || "lokal"; }
+  function isNew(d){ return !!(d && d.createdAt && d.createdAt > seenAt && d.createdBy !== myId()); }
+  function newCards(){
+    var out = [];
+    cards.forEach(function(d, id){ if (isNew(d)) out.push({id: id, d: d}); });
+    out.sort(function(a, b){ return a.d.createdAt < b.d.createdAt ? 1 : -1; });
+    return out;
+  }
+  function markSeen(){
+    seenAt = new Date().toISOString();
+    try{ localStorage.setItem(LS_SEEN, seenAt); }catch(e){}
+    render();
+  }
+
+  var bellBtn = document.getElementById("btn-bell");
+  var bellCount = document.getElementById("bell-count");
+  var bellPanel = document.getElementById("bell-panel");
+  var lastBellN = 0, bellOpen = false;
+
+  function relTime(iso){
+    var t = new Date(iso);
+    if (isNaN(t)) return "";
+    var min = Math.round((Date.now() - t.getTime()) / 60000);
+    if (min < 1) return "gerade eben";
+    if (min < 60) return "vor " + min + " Min.";
+    var h = Math.round(min / 60);
+    if (h < 24) return "vor " + h + " Std.";
+    return t.toLocaleDateString("de-DE", {weekday:"short", day:"2-digit", month:"2-digit"});
+  }
+  function colLabel(id){
+    var c = COLUMNS.filter(function(x){ return x.id === id; })[0];
+    return c ? c.label : "";
+  }
+
+  function renderBell(){
+    var n = newCards().length;
+    bellCount.hidden = n === 0;
+    bellCount.textContent = n > 99 ? "99+" : String(n);
+    bellBtn.setAttribute("aria-label", n === 0 ? "Keine neuen Karten" : (n === 1 ? "1 neue Karte" : n + " neue Karten"));
+    bellBtn.title = n === 0 ? "Keine neuen Karten" : (n === 1 ? "1 neue Karte" : n + " neue Karten");
+    if (n > lastBellN && !reduceMotion){
+      bellBtn.classList.remove("boom");
+      void bellBtn.offsetWidth;               // Animation neu starten
+      bellBtn.classList.add("boom");
+    }
+    lastBellN = n;
+  }
+
+  function openBell(){
+    var list = newCards();
+    bellPanel.textContent = "";
+    var h = document.createElement("h3");
+    h.textContent = list.length ? (list.length === 1 ? "1 neue Karte" : list.length + " neue Karten") : "Keine neuen Karten";
+    bellPanel.appendChild(h);
+    if (!list.length){
+      var p = document.createElement("p");
+      p.className = "bell-empty";
+      p.textContent = "Sobald jemand aus dem Team eine Karte anlegt, erscheint sie hier und der Böller zeigt eine goldene Zahl.";
+      bellPanel.appendChild(p);
+    } else {
+      var ul = document.createElement("ul");
+      ul.className = "bell-list";
+      list.forEach(function(it){
+        var li = document.createElement("li");
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "bell-item"; b.dataset.goto = it.id;
+        var bt = document.createElement("span");
+        bt.className = "bt"; bt.textContent = it.d.title || "(ohne Titel)";
+        var bm = document.createElement("span");
+        bm.className = "bm";
+        var bits = [colLabel(it.d.column), relTime(it.d.createdAt)];
+        var mem = membersOf(it.d);
+        if (mem.length) bits.push(mem.join(", "));
+        bm.textContent = bits.filter(Boolean).join(" · ");
+        b.appendChild(bt); b.appendChild(bm);
+        li.appendChild(b); ul.appendChild(li);
+      });
+      bellPanel.appendChild(ul);
+      var f = document.createElement("p");
+      f.className = "bell-foot";
+      f.textContent = "Antippen springt zur Karte. Beim Schließen gelten alle als gesehen.";
+      bellPanel.appendChild(f);
+    }
+    bellPanel.hidden = false;
+    bellOpen = true;
+    bellBtn.setAttribute("aria-expanded", "true");
+  }
+
+  function closeBell(){
+    if (!bellOpen) return;
+    bellPanel.hidden = true;
+    bellOpen = false;
+    bellBtn.setAttribute("aria-expanded", "false");
+    markSeen();
+  }
+
+  function goToCard(id){
+    var d = cards.get(id);
+    if (!d) return;
+    if (d.column === "archive" && !archOpen && mqWide.matches) toggleArchive(true);
+    scrollToCol(d.column);
+    setTimeout(function(){
+      var el = board.querySelector('.card[data-id="' + id + '"]');
+      if (!el) return;
+      el.scrollIntoView({block: "center", inline: "nearest", behavior: reduceMotion ? "auto" : "smooth"});
+      el.classList.add("flash");
+      setTimeout(function(){ el.classList.remove("flash"); }, 1900);
+    }, 380);
+  }
+
+  bellBtn.addEventListener("click", function(){ if (bellOpen) closeBell(); else openBell(); });
+  bellPanel.addEventListener("click", function(e){
+    var it = e.target.closest("[data-goto]");
+    if (!it) return;
+    var id = it.dataset.goto;
+    closeBell();
+    goToCard(id);
+  });
+  document.addEventListener("pointerdown", function(e){
+    if (bellOpen && e.target.closest && !e.target.closest(".bell-wrap")) closeBell();
+  }, true);
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && bellOpen){ closeBell(); bellBtn.focus(); }
+  });
+
+  /* ---------- Design: Automatisch / Hell / Dunkel (pro Gerät) ---------- */
+  var LS_THEME = "board-ipadgruppe-design-v1";
+  var THEMES = {
+    auto:  {icon: "\u25D0", label: "Automatisch", next: "light"},
+    light: {icon: "\u2600\uFE0E", label: "Hell",     next: "dark"},
+    dark:  {icon: "\u263E", label: "Dunkel",      next: "auto"}
+  };
+  var themePref = "auto";
+  try{ var tp = localStorage.getItem(LS_THEME); if (THEMES[tp]) themePref = tp; }catch(e){}
+  var btnTheme = document.getElementById("btn-theme");
+  function applyTheme(){
+    var root = document.documentElement;
+    if (themePref === "auto") root.removeAttribute("data-theme");
+    else root.setAttribute("data-theme", themePref);
+    root.style.colorScheme = themePref === "auto" ? "light dark" : themePref;
+    var t = THEMES[themePref];
+    btnTheme.querySelector(".ti").textContent = t.icon;
+    btnTheme.querySelector(".tl").textContent = t.label;
+    var label = "Design: " + t.label + " – antippen zum Wechseln";
+    btnTheme.title = label;
+    btnTheme.setAttribute("aria-label", label);
+  }
+  btnTheme.addEventListener("click", function(){
+    themePref = THEMES[themePref].next;
+    try{ localStorage.setItem(LS_THEME, themePref); }catch(e){}
+    applyTheme();
+  });
+  applyTheme();
 
   /* ---------- Team verwalten ---------- */
   var teamOverlay = document.getElementById("team-overlay");
